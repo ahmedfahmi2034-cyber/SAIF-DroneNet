@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SAIF DroneNet</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">🛸</div>
+        <div>SAIF</div>
+        <div>DroneNet</div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <button
+            class="sidebar-btn active"
+            onclick="showSection('dashboard')"
+            data-ar="▣ لوحة التحكم"
+            data-en="▣ Dashboard">
+            ▣ لوحة التحكم
+        </button>
+
+        <button
+            class="sidebar-btn"
+            onclick="showSection('drones')"
+            data-ar="✈ الدرونات"
+            data-en="✈ Drones">
+            ✈ الدرونات
+        </button>
+
+        <button
+            class="sidebar-btn"
+            onclick="showSection('missions')"
+            data-ar="⚙ المهام"
+            data-en="⚙ Missions">
+            ⚙ المهام
+        </button>
+
+        <button
+            class="sidebar-btn"
+            onclick="showSection('alerts')"
+            data-ar="⚠ التنبيهات"
+            data-en="⚠ Alerts">
+            ⚠ التنبيهات
+        </button>
+
+        <button
+            class="sidebar-btn"
+            onclick="showSection('reports')"
+            data-ar="▤ التقارير"
+            data-en="▤ Reports">
+            ▤ التقارير
+        </button>
+
+        <button
+            class="sidebar-btn"
+            onclick="showSection('settings')"
+            data-ar="⚙ الإعدادات"
+            data-en="⚙ Settings">
+            ⚙ الإعدادات
+        </button>
+
+    </nav>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main-area">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-title">
+            🛸 SAIF DroneNet
+        </div>
+
+        <div class="language-switch">
+
+            <button onclick="changeDashboardLanguage('ar')">
+                العربية
+            </button>
+
+            <button onclick="changeDashboardLanguage('en')">
+                English
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <main class="content-area">
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+            id="dashboard"
+            class="page-section active-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="لوحة التحكم"
+                        data-en="Dashboard">
+                        لوحة التحكم
+                    </h1>
+
+                    <p
+                        data-ar="نظرة عامة على منصة SAIF DroneNet"
+                        data-en="Overview of the SAIF DroneNet platform">
+                        نظرة عامة على منصة SAIF DroneNet
+                    </p>
+
+                </div>
+
+                <div class="system-status">
+
+                    🟢
+
+                    <span
+                        data-ar="النظام يعمل"
+                        data-en="System Online">
+                        النظام يعمل
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🛸</div>
+
+                    <div>
+
+                        <span
+                            data-ar="الدرونات"
+                            data-en="Drones">
+                            الدرونات
+                        </span>
+
+                        <strong>1</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🔋</div>
+
+                    <div>
+
+                        <span
+                            data-ar="البطارية"
+                            data-en="Battery">
+                            البطارية
+                        </span>
+
+                        <strong id="dashboardBattery">
+                            100%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">📡</div>
+
+                    <div>
+
+                        <span
+                            data-ar="الإشارة"
+                            data-en="Signal">
+                            الإشارة
+                        </span>
+
+                        <strong
+                            id="dashboardSignal"
+                            class="green-text">
+                            ممتازة
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🚀</div>
+
+                    <div>
+
+                        <span
+                            data-ar="السرعة"
+                            data-en="Speed">
+                            السرعة
+                        </span>
+
+                        <strong>
+                            35 km/h
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD GRID -->
+
+            <div class="dashboard-layout">
+
+
+                <!-- LEFT PANEL -->
+
+                <aside class="dashboard-panel">
+
+                    <div class="panel-title">
+
+                        🚨
+
+                        <span
+                            data-ar="الحالة والتنبيهات"
+                            data-en="Status & Alerts">
+                            الحالة والتنبيهات
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="التنبيه"
+                            data-en="Alert">
+                            التنبيه
+                        </span>
+
+                        <strong id="alertText">
+                            لا توجد تنبيهات
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="البطارية"
+                            data-en="Battery">
+                            البطارية
+                        </span>
+
+                        <strong id="batteryText">
+                            100%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="الحالة"
+                            data-en="Status">
+                            الحالة
+                        </span>
+
+                        <strong id="statusText">
+                            في الدورية
+                        </strong>
+
+                    </div>
+
+
+                    <div class="panel-title">
+
+                        🛸
+
+                        <span
+                            data-ar="معلومات الدرون"
+                            data-en="Drone Information">
+                            معلومات الدرون
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>ID</span>
+
+                        <strong>
+                            DR-001
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="الارتفاع"
+                            data-en="Altitude">
+                            الارتفاع
+                        </span>
+
+                        <strong>
+                            120 m
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="السرعة"
+                            data-en="Speed">
+                            السرعة
+                        </span>
+
+                        <strong>
+                            35 km/h
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span
+                            data-ar="الإشارة"
+                            data-en="Signal">
+                            الإشارة
+                        </span>
+
+                        <strong
+                            id="signalText"
+                            class="green-text">
+                            ممتازة
+                        </strong>
+
+                    </div>
+
+
+                    <!-- MAINTENANCE -->
+
+                    <div class="panel-title">
+
+                        🛠️
+
+                        <span
+                            data-ar="الصيانة"
+                            data-en="Maintenance">
+                            الصيانة
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        id="maintenanceBtn"
+                        class="primary-btn full-btn"
+                        data-ar="🧹 بدء التنظيف"
+                        data-en="🧹 Start Cleaning">
+                        🧹 بدء التنظيف
+                    </button>
+
+
+                    <p
+                        id="maintenanceStatus"
+                        class="maintenance-status">
+                        جاهز
+                    </p>
+
+                </aside>
+
+
+                <!-- MAP -->
+
+                <section class="map-panel">
+
+                    <div class="panel-heading">
+
+                        <h2
+                            data-ar="🗺️ الخريطة التشغيلية"
+                            data-en="🗺️ Operational Map">
+                            🗺️ الخريطة التشغيلية
+                        </h2>
+
+                    </div>
+
+
+                    <div class="map-buttons">
+
+                        <button
+                            id="emergencyBtn"
+                            class="danger-btn"
+                            data-ar="🚨 محاكاة حالة طوارئ"
+                            data-en="🚨 Simulate Emergency">
+                            🚨 محاكاة حالة طوارئ
+                        </button>
+
+
+                        <button
+                            id="startPatrolBtn"
+                            class="primary-btn"
+                            data-ar="🛸 بدء الدورية"
+                            data-en="🛸 Start Patrol">
+                            🛸 بدء الدورية
+                        </button>
+
+
+                        <button
+                            id="stopPatrolBtn"
+                            class="secondary-btn"
+                            data-ar="⏹ إيقاف الدورية"
+                            data-en="⏹ Stop Patrol">
+                            ⏹ إيقاف الدورية
+                        </button>
+
+
+                        <button
+                            id="resetBtn"
+                            class="secondary-btn"
+                            data-ar="🔄 إعادة ضبط المهمة"
+                            data-en="🔄 Reset Mission">
+                            🔄 إعادة ضبط المهمة
+                        </button>
+
+                    </div>
+
+
+                    <div id="map"></div>
+
+                </section>
+
+
+                <!-- CAMERA -->
+
+                <aside
+                    class="dashboard-panel camera-panel">
+
+                    <div class="panel-title">
+
+                        📹
+
+                        <span
+                            data-ar="الكاميرا المباشرة"
+                            data-en="Live Camera">
+                            الكاميرا المباشرة
+                        </span>
+
+                    </div>
+
+
+                    <div class="camera-box">
+
+                        <div
+                            class="live-badge"
+                            data-ar="🔴 مباشر"
+                            data-en="🔴 LIVE">
+                            🔴 مباشر
+                        </div>
+
+
+                        <video
+                            id="droneVideo"
+                            autoplay
+                            muted
+                            loop
+                            controls>
+
+                            <source
+                                src="videos/drone.mp4"
+                                type="video/mp4">
+
+                        </video>
+
+                    </div>
+
+
+                    <div class="camera-info">
+
+                        <span
+                            data-ar="📡 الإشارة"
+                            data-en="📡 Signal">
+                            📡 الإشارة
+                        </span>
+
+                        <strong
+                            class="green-text"
+                            data-ar="ممتازة"
+                            data-en="Excellent">
+                            ممتازة
+                        </strong>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+
+            <!-- EVENT LOG -->
+
+            <div class="event-card">
+
+                <div class="panel-title">
+
+                    📋
+
+                    <span
+                        data-ar="سجل الأحداث"
+                        data-en="Event Log">
+                        سجل الأحداث
+                    </span>
+
+                </div>
+
+
+                <div id="eventLog">
+                    لا توجد أحداث حتى الآن.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DRONES
+        ================================================== -->
+
+        <section
+            id="drones"
+            class="page-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="✈ إدارة الدرونات"
+                        data-en="✈ Drone Management">
+                        ✈ إدارة الدرونات
+                    </h1>
+
+                    <p
+                        data-ar="مراقبة جميع الدرونات المتصلة"
+                        data-en="Monitor all connected drones">
+                        مراقبة جميع الدرونات المتصلة
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="page-action"
+                    data-ar="🟢 درون واحد متصل"
+                    data-en="🟢 1 Drone Online">
+                    🟢 درون واحد متصل
+                </div>
+
+            </div>
+
+
+            <div class="drone-overview">
+
+                <div class="drone-main-card">
+
+                    <div class="drone-main-header">
+
+                        <div class="big-drone-icon">
+                            🛸
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                SAIF Drone DR-001
+                            </h2>
+
+                            <span
+                                class="online-badge"
+                                data-ar="● متصل"
+                                data-en="● Online">
+                                ● متصل
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="drone-data-grid">
+
+
+                        <div>
+
+                            <span
+                                data-ar="🔋 البطارية"
+                                data-en="🔋 Battery">
+                                🔋 البطارية
+                            </span>
+
+                            <strong id="droneBatteryPage">
+                                100%
+                            </strong>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar"
+                                    id="droneBatteryBar">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                data-ar="📡 الإشارة"
+                                data-en="📡 Signal">
+                                📡 الإشارة
+                            </span>
+
+                            <strong
+                                class="green-text"
+                                data-ar="ممتازة"
+                                data-en="Excellent">
+                                ممتازة
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                data-ar="📏 الارتفاع"
+                                data-en="📏 Altitude">
+                                📏 الارتفاع
+                            </span>
+
+                            <strong>
+                                120 m
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                data-ar="🚀 السرعة"
+                                data-en="🚀 Speed">
+                                🚀 السرعة
+                            </span>
+
+                            <strong>
+                                35 km/h
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                data-ar="📍 الموقع"
+                                data-en="📍 Location">
+                                📍 الموقع
+                            </span>
+
+                            <strong
+                                data-ar="الرياض"
+                                data-en="Riyadh">
+                                الرياض
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                data-ar="🛠 الحالة"
+                                data-en="🛠 Status">
+                                🛠 الحالة
+                            </span>
+
+                            <strong id="droneStatusPage">
+                                في الدورية
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="panel-title">
+
+                    📊
+
+                    <span
+                        data-ar="تفاصيل الدرون"
+                        data-en="Drone Details">
+                        تفاصيل الدرون
+                    </span>
+
+                </div>
+
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th
+                                data-ar="المعرّف"
+                                data-en="ID">
+                                المعرّف
+                            </th>
+
+                            <th
+                                data-ar="الحالة"
+                                data-en="Status">
+                                الحالة
+                            </th>
+
+                            <th
+                                data-ar="البطارية"
+                                data-en="Battery">
+                                البطارية
+                            </th>
+
+                            <th
+                                data-ar="الارتفاع"
+                                data-en="Altitude">
+                                الارتفاع
+                            </th>
+
+                            <th
+                                data-ar="السرعة"
+                                data-en="Speed">
+                                السرعة
+                            </th>
+
+                            <th
+                                data-ar="الإشارة"
+                                data-en="Signal">
+                                الإشارة
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                DR-001
+                            </td>
+
+                            <td
+                                id="tableDroneStatus"
+                                class="green-text">
+                                في الدورية
+                            </td>
+
+                            <td id="tableDroneBattery">
+                                100%
+                            </td>
+
+                            <td>
+                                120 m
+                            </td>
+
+                            <td>
+                                35 km/h
+                            </td>
+
+                            <td
+                                class="green-text"
+                                data-ar="ممتازة"
+                                data-en="Excellent">
+                                ممتازة
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MISSIONS
+        ================================================== -->
+
+        <section
+            id="missions"
+            class="page-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="⚙ إدارة المهام"
+                        data-en="⚙ Mission Management">
+                        ⚙ إدارة المهام
+                    </h1>
+
+                    <p
+                        data-ar="إدارة ومتابعة عمليات الدرون"
+                        data-en="Manage and monitor drone operations">
+                        إدارة ومتابعة عمليات الدرون
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    data-ar="＋ مهمة جديدة"
+                    data-en="＋ New Mission">
+                    ＋ مهمة جديدة
+                </button>
+
+            </div>
+
+
+            <div class="mission-grid">
+
+
+                <div
+                    class="mission-card active-mission">
+
+                    <div class="mission-icon">
+                        🛡️
+                    </div>
+
+                    <h2
+                        data-ar="الدورية الأمنية"
+                        data-en="Security Patrol">
+                        الدورية الأمنية
+                    </h2>
+
+                    <span
+                        class="mission-status"
+                        data-ar="● نشطة"
+                        data-en="● Active">
+                        ● نشطة
+                    </span>
+
+
+                    <div class="mission-details">
+
+                        <p>
+
+                            <span
+                                data-ar="🛸 الدرون:"
+                                data-en="🛸 Drone:">
+                                🛸 الدرون:
+                            </span>
+
+                            <strong>
+                                DR-001
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="📍 المنطقة:"
+                                data-en="📍 Area:">
+                                📍 المنطقة:
+                            </span>
+
+                            <strong
+                                data-ar="الرياض"
+                                data-en="Riyadh">
+                                الرياض
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="🚀 السرعة:"
+                                data-en="🚀 Speed:">
+                                🚀 السرعة:
+                            </span>
+
+                            <strong>
+                                35 km/h
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mission-card">
+
+                    <div class="mission-icon">
+                        🚨
+                    </div>
+
+                    <h2
+                        data-ar="الاستجابة للطوارئ"
+                        data-en="Emergency Response">
+                        الاستجابة للطوارئ
+                    </h2>
+
+                    <span
+                        class="mission-status standby"
+                        data-ar="● في وضع الاستعداد"
+                        data-en="● Standby">
+                        ● في وضع الاستعداد
+                    </span>
+
+
+                    <div class="mission-details">
+
+                        <p>
+
+                            <span
+                                data-ar="🛸 الدرون:"
+                                data-en="🛸 Drone:">
+                                🛸 الدرون:
+                            </span>
+
+                            <strong>
+                                DR-001
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="🎯 الأولوية:"
+                                data-en="🎯 Priority:">
+                                🎯 الأولوية:
+                            </span>
+
+                            <strong
+                                data-ar="عالية"
+                                data-en="High">
+                                عالية
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="📡 الاستجابة:"
+                                data-en="📡 Response:">
+                                📡 الاستجابة:
+                            </span>
+
+                            <strong
+                                data-ar="جاهزة"
+                                data-en="Ready">
+                                جاهزة
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mission-card">
+
+                    <div class="mission-icon">
+                        📍
+                    </div>
+
+                    <h2
+                        data-ar="مراقبة المنطقة"
+                        data-en="Area Monitoring">
+                        مراقبة المنطقة
+                    </h2>
+
+                    <span
+                        class="mission-status standby"
+                        data-ar="● مجدولة"
+                        data-en="● Scheduled">
+                        ● مجدولة
+                    </span>
+
+
+                    <div class="mission-details">
+
+                        <p>
+
+                            <span
+                                data-ar="📍 المنطقة:"
+                                data-en="📍 Area:">
+                                📍 المنطقة:
+                            </span>
+
+                            <strong
+                                data-ar="الرياض"
+                                data-en="Riyadh">
+                                الرياض
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="⏱ المدة:"
+                                data-en="⏱ Duration:">
+                                ⏱ المدة:
+                            </span>
+
+                            <strong>
+                                30 min
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="🛸 الدرون:"
+                                data-en="🛸 Drone:">
+                                🛸 الدرون:
+                            </span>
+
+                            <strong>
+                                DR-001
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mission-card">
+
+                    <div class="mission-icon">
+                        🧹
+                    </div>
+
+                    <h2
+                        data-ar="الصيانة"
+                        data-en="Maintenance">
+                        الصيانة
+                    </h2>
+
+                    <span
+                        class="mission-status standby"
+                        data-ar="● جاهزة"
+                        data-en="● Ready">
+                        ● جاهزة
+                    </span>
+
+
+                    <div class="mission-details">
+
+                        <p>
+
+                            <span
+                                data-ar="🛸 الدرون:"
+                                data-en="🛸 Drone:">
+                                🛸 الدرون:
+                            </span>
+
+                            <strong>
+                                DR-001
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="🔧 النوع:"
+                                data-en="🔧 Type:">
+                                🔧 النوع:
+                            </span>
+
+                            <strong
+                                data-ar="تنظيف"
+                                data-en="Cleaning">
+                                تنظيف
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            <span
+                                data-ar="🟢 النظام:"
+                                data-en="🟢 System:">
+                                🟢 النظام:
+                            </span>
+
+                            <strong
+                                data-ar="طبيعي"
+                                data-en="Normal">
+                                طبيعي
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ALERTS
+        ================================================== -->
+
+        <section
+            id="alerts"
+            class="page-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="⚠ مركز التنبيهات"
+                        data-en="⚠ Alert Center">
+                        ⚠ مركز التنبيهات
+                    </h1>
+
+                    <p
+                        data-ar="مراقبة حالات الطوارئ والتنبيهات"
+                        data-en="Monitor emergencies and system alerts">
+                        مراقبة حالات الطوارئ والتنبيهات
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="page-action green-action"
+                    data-ar="🟢 لا توجد تنبيهات حرجة"
+                    data-en="🟢 No Critical Alerts">
+                    🟢 لا توجد تنبيهات حرجة
+                </div>
+
+            </div>
+
+
+            <div class="alerts-container">
+
+
+                <div class="alert-card normal">
+
+                    <div class="alert-big-icon">
+                        🟢
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="النظام طبيعي"
+                            data-en="System Normal">
+                            النظام طبيعي
+                        </h2>
+
+                        <p
+                            data-ar="جميع أنظمة الدرون تعمل بشكل طبيعي."
+                            data-en="All drone systems are operating normally.">
+                            جميع أنظمة الدرون تعمل بشكل طبيعي.
+                        </p>
+
+                        <small
+                            data-ar="الآن"
+                            data-en="Just now">
+                            الآن
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="alert-card normal">
+
+                    <div class="alert-big-icon">
+                        📡
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="الإشارة ممتازة"
+                            data-en="Signal Excellent">
+                            الإشارة ممتازة
+                        </h2>
+
+                        <p
+                            data-ar="الاتصال مع DR-001 مستقر."
+                            data-en="Communication with DR-001 is stable.">
+                            الاتصال مع DR-001 مستقر.
+                        </p>
+
+                        <small
+                            data-ar="الآن"
+                            data-en="Just now">
+                            الآن
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="alert-card warning">
+
+                    <div class="alert-big-icon">
+                        🔋
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="مراقبة البطارية"
+                            data-en="Battery Monitoring">
+                            مراقبة البطارية
+                        </h2>
+
+                        <p
+                            data-ar="يتم مراقبة مستوى البطارية باستمرار."
+                            data-en="Battery level is being monitored continuously.">
+                            يتم مراقبة مستوى البطارية باستمرار.
+                        </p>
+
+                        <small
+                            data-ar="المراقبة نشطة"
+                            data-en="Active monitoring">
+                            المراقبة نشطة
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORTS
+        ================================================== -->
+
+        <section
+            id="reports"
+            class="page-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="▤ التقارير"
+                        data-en="▤ Reports">
+                        ▤ التقارير
+                    </h1>
+
+                    <p
+                        data-ar="إحصائيات عمليات SAIF DroneNet"
+                        data-en="SAIF DroneNet operation statistics">
+                        إحصائيات عمليات SAIF DroneNet
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="secondary-btn"
+                    data-ar="⬇ تصدير التقرير"
+                    data-en="⬇ Export Report">
+                    ⬇ تصدير التقرير
+                </button>
+
+            </div>
+
+
+            <div class="report-grid">
+
+
+                <div class="report-card">
+
+                    <span>🛸</span>
+
+                    <small
+                        data-ar="مهام الدورية"
+                        data-en="Patrol Missions">
+                        مهام الدورية
+                    </small>
+
+                    <strong>
+                        12
+                    </strong>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <span>🚨</span>
+
+                    <small
+                        data-ar="استجابات الطوارئ"
+                        data-en="Emergency Responses">
+                        استجابات الطوارئ
+                    </small>
+
+                    <strong>
+                        2
+                    </strong>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <span>🧹</span>
+
+                    <small
+                        data-ar="عمليات الصيانة"
+                        data-en="Maintenance Jobs">
+                        عمليات الصيانة
+                    </small>
+
+                    <strong>
+                        5
+                    </strong>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <span>⏱️</span>
+
+                    <small
+                        data-ar="ساعات الطيران"
+                        data-en="Flight Hours">
+                        ساعات الطيران
+                    </small>
+
+                    <strong>
+                        18 h
+                    </strong>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <span>📍</span>
+
+                    <small
+                        data-ar="المناطق المراقبة"
+                        data-en="Areas Monitored">
+                        المناطق المراقبة
+                    </small>
+
+                    <strong>
+                        8
+                    </strong>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <span>📡</span>
+
+                    <small
+                        data-ar="متوسط الإشارة"
+                        data-en="Average Signal">
+                        متوسط الإشارة
+                    </small>
+
+                    <strong>
+                        98%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="content-card report-summary">
+
+                <div class="panel-title">
+
+                    📊
+
+                    <span
+                        data-ar="ملخص الأداء"
+                        data-en="Performance Summary">
+                        ملخص الأداء
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span
+                        data-ar="معدل نجاح المهام"
+                        data-en="Mission Success Rate">
+                        معدل نجاح المهام
+                    </span>
+
+                    <strong class="green-text">
+                        96%
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span
+                        data-ar="توفر النظام"
+                        data-en="System Availability">
+                        توفر النظام
+                    </span>
+
+                    <strong class="green-text">
+                        99.2%
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span
+                        data-ar="متوسط زمن الاستجابة"
+                        data-en="Average Response Time">
+                        متوسط زمن الاستجابة
+                    </span>
+
+                    <strong>
+                        2.4 min
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SETTINGS
+        ================================================== -->
+
+        <section
+            id="settings"
+            class="page-section">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1
+                        data-ar="⚙ الإعدادات"
+                        data-en="⚙ Settings">
+                        ⚙ الإعدادات
+                    </h1>
+
+                    <p
+                        data-ar="إعدادات منصة SAIF DroneNet"
+                        data-en="SAIF DroneNet platform settings">
+                        إعدادات منصة SAIF DroneNet
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        🌐
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="اللغة"
+                            data-en="Language">
+                            اللغة
+                        </h2>
+
+                        <p
+                            data-ar="اختر لغة الواجهة."
+                            data-en="Choose the interface language.">
+                            اختر لغة الواجهة.
+                        </p>
+
+
+                        <button
+                            class="secondary-btn"
+                            onclick="changeDashboardLanguage('ar')">
+                            العربية
+                        </button>
+
+
+                        <button
+                            class="secondary-btn"
+                            onclick="changeDashboardLanguage('en')">
+                            English
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        🎨
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="المظهر"
+                            data-en="Theme">
+                            المظهر
+                        </h2>
+
+                        <p
+                            data-ar="الوضع الداكن / الفاتح"
+                            data-en="Dark / Light Mode">
+                            الوضع الداكن / الفاتح
+                        </p>
+
+
+                        <button
+                            class="primary-btn"
+                            onclick="toggleTheme()"
+                            data-ar="☀️ / 🌙 تغيير المظهر"
+                            data-en="☀️ / 🌙 Change Theme">
+                            ☀️ / 🌙 تغيير المظهر
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        📡
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="الاتصال"
+                            data-en="Connection">
+                            الاتصال
+                        </h2>
+
+                        <p
+                            class="green-text"
+                            data-ar="● متصل"
+                            data-en="● Connected">
+                            ● متصل
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="الأمان"
+                            data-en="Security">
+                            الأمان
+                        </h2>
+
+                        <p
+                            class="green-text"
+                            data-ar="● آمن"
+                            data-en="● Secure">
+                            ● آمن
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        🛸
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="شبكة الدرونات"
+                            data-en="Drone Network">
+                            شبكة الدرونات
+                        </h2>
+
+                        <p
+                            data-ar="درون واحد متصل"
+                            data-en="1 connected drone">
+                            درون واحد متصل
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-icon">
+                        🖥️
+                    </div>
+
+                    <div>
+
+                        <h2
+                            data-ar="النظام"
+                            data-en="System">
+                            النظام
+                        </h2>
+
+                        <p
+                            class="green-text"
+                            data-ar="● يعمل بشكل طبيعي"
+                            data-en="● Operational">
+                            ● يعمل بشكل طبيعي
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     LEAFLET
+===================================================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<!-- =====================================================
+     LANGUAGE / THEME
+===================================================== -->
+
+<script>
+
+function getCurrentLanguage() {
+
+    return localStorage.getItem("language") || "ar";
+
+}
+
+
+/* =========================================
+   APPLY LANGUAGE
+========================================= */
+
+function applyDashboardLanguage() {
+
+    const language =
+        getCurrentLanguage();
+
+
+    document.documentElement.lang =
+        language;
+
+
+    document.documentElement.dir =
+        language === "ar"
+            ? "rtl"
+            : "ltr";
+
+
+    document
+        .querySelectorAll("[data-ar][data-en]")
+        .forEach(element => {
+
+            element.textContent =
+                language === "ar"
+                    ? element.dataset.ar
+                    : element.dataset.en;
+
+        });
+
+
+    updateDynamicLanguage();
+
+}
+
+
+/* =========================================
+   CHANGE LANGUAGE
+========================================= */
+
+function changeDashboardLanguage(lang) {
+
+    localStorage.setItem(
+        "language",
+        lang
+    );
+
+
+    applyDashboardLanguage();
+
+}
+
+
+/* =========================================
+   THEME
+========================================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle(
+        "light-mode"
+    );
+
+
+    const light =
+        document.body.classList.contains(
+            "light-mode"
+        );
+
+
+    localStorage.setItem(
+        "theme",
+        light
+            ? "light"
+            : "dark"
+    );
+
+}
+
+
+/* =========================================
+   LOAD THEME
+========================================= */
+
+if (
+    localStorage.getItem("theme")
+    === "light"
+) {
+
+    document.body.classList.add(
+        "light-mode"
+    );
+
+}
+
+
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
+
+function showSection(section) {
+
+    document
+        .querySelectorAll(".page-section")
+        .forEach(page => {
+
+            page.classList.remove(
+                "active-section"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(
+            section
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active-section"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(".sidebar-btn")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".sidebar-btn"
+        );
+
+
+    const sections = [
+        "dashboard",
+        "drones",
+        "missions",
+        "alerts",
+        "reports",
+        "settings"
+    ];
+
+
+    const index =
+        sections.indexOf(section);
+
+
+    if (
+        index !== -1 &&
+        buttons[index]
+    ) {
+
+        buttons[index].classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (section === "dashboard") {
+
+        setTimeout(() => {
+
+            window.dispatchEvent(
+                new Event("resize")
+            );
+
+        }, 150);
+
+    }
+
+}
+
+
+/* =========================================
+   INITIAL LANGUAGE
+========================================= */
+
+applyDashboardLanguage();
+
+</script>
+
+
+<!-- =====================================================
+     PROJECT JS
+===================================================== -->
+
+<script src="js/ui.js"></script>
+<script src="js/script.js"></script>
+
+
+</body>
+</html>
