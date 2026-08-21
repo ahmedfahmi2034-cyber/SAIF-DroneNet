@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAIF DroneNet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="language-switch">
+
+        <button onclick="setLanguage('ar')">
+            العربية
+        </button>
+
+        <button onclick="setLanguage('en')">
+            English
+        </button>
+
+        <button onclick="toggleTheme()" id="themeButton">
+            ☀️ Light
+        </button>
+
+    </div>
+
+    <h1>🛸 SAIF DroneNet</h1>
+
+    <p id="loginDescription">
+        Smart Drone Monitoring Platform
+    </p>
+
+    <input
+        id="usernameInput"
+        type="text"
+        placeholder="Username"
+    >
+
+    <input
+        id="passwordInput"
+        type="password"
+        placeholder="Password"
+    >
+
+    <button id="loginButton" onclick="login()">
+        Login
+    </button>
+
+</div>
+
+<script>
+
+function setLanguage(lang) {
+
+    const description =
+        document.getElementById("loginDescription");
+
+    const username =
+        document.getElementById("usernameInput");
+
+    const password =
+        document.getElementById("passwordInput");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const themeButton =
+        document.getElementById("themeButton");
+
+
+    if (lang === "ar") {
+
+        document.documentElement.lang = "ar";
+        document.documentElement.dir = "rtl";
+
+        description.textContent =
+            "منصة مراقبة الدرونات الذكية";
+
+        username.placeholder =
+            "اسم المستخدم";
+
+        password.placeholder =
+            "كلمة المرور";
+
+        loginButton.textContent =
+            "دخول";
+
+        themeButton.textContent =
+            document.body.classList.contains("light-mode")
+                ? "🌙 داكن"
+                : "☀️ فاتح";
+
+    } else {
+
+        document.documentElement.lang = "en";
+        document.documentElement.dir = "ltr";
+
+        description.textContent =
+            "Smart Drone Monitoring Platform";
+
+        username.placeholder =
+            "Username";
+
+        password.placeholder =
+            "Password";
+
+        loginButton.textContent =
+            "Login";
+
+        themeButton.textContent =
+            document.body.classList.contains("light-mode")
+                ? "🌙 Dark"
+                : "☀️ Light";
+    }
+    savePreferences();
+}
+
+
+
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light-mode");
+
+    const button =
+        document.getElementById("themeButton");
+
+    const isArabic =
+        document.documentElement.lang === "ar";
+
+
+    if (document.body.classList.contains("light-mode")) {
+
+        button.textContent =
+            isArabic ? "🌙 داكن" : "🌙 Dark";
+
+    } else {
+
+        button.textContent =
+            isArabic ? "☀️ فاتح" : "☀️ Light";
+    }
+    savePreferences();
+}
+
+
+function login() {
+
+    window.location.href = "dashboard.html";
+
+}
+function savePreferences() {
+    localStorage.setItem(
+        "language",
+        document.documentElement.lang
+    );
+
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light-mode")
+            ? "light"
+            : "dark"
+    );
+}
+
+</script>
+
+</body>
+</html>
