@@ -1,534 +1,874 @@
-// =====================================================
-// SAIF DRONENET - MAIN DASHBOARD LOGIC
-// =====================================================
+/* SAIF DroneNet - Simulation Engine */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const mapElement =
+            document.getElementById("map");
 
 
-// نتأكد أننا داخل صفحة الـ Dashboard
-const mapElement = document.getElementById("map");
+        if (
+            !mapElement ||
+            typeof L === "undefined"
+        ) {
 
-if (mapElement) {
+            return;
 
-    // =================================================
-    // MAP
-    // =================================================
-
-    const map = L.map("map").setView(
-        [24.7136, 46.6753],
-        15
-    );
-
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            attribution: "&copy; OpenStreetMap"
         }
-    ).addTo(map);
 
 
-    // =================================================
-    // DRONE
-    // =================================================
+        /* =========================
+           MAP
+        ========================= */
 
-    const drone = L.marker(
-        [24.7136, 46.6753]
-    ).addTo(map);
-
-
-    // =================================================
-    // PATROL PATH
-    // =================================================
-
-    const patrolPath = [
-
-        [24.7136, 46.6753],
-        [24.7140, 46.6765],
-        [24.7148, 46.6775],
-        [24.7155, 46.6768],
-        [24.7150, 46.6752],
-        [24.7142, 46.6745]
-
-    ];
+        const map =
+            L.map("map").setView(
+                [24.7136, 46.6753],
+                15
+            );
 
 
-    let patrolIndex = 0;
-
-    let patrolInterval = null;
-
-    let battery = 100;
-
-
-    window.currentDroneBattery = battery;
-    window.currentDroneStatus = "Patrolling";
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    "&copy; OpenStreetMap"
+            }
+        ).addTo(map);
 
 
-    // =================================================
-    // BATTERY
-    // =================================================
+        /* =========================
+           DRONE
+        ========================= */
 
-    function updateBattery() {
+        const drone =
+            L.marker(
+                [24.7136, 46.6753]
+            ).addTo(map);
 
-        window.currentDroneBattery = battery;
 
+        /* =========================
+           PATROL PATH
+        ========================= */
 
-        const ids = [
-            "batteryText",
-            "cardBattery",
-            "dashboardBattery",
-            "droneBatteryPage",
-            "tableDroneBattery"
+        const patrolPath = [
+
+            [24.7136, 46.6753],
+
+            [24.7140, 46.6765],
+
+            [24.7148, 46.6775],
+
+            [24.7155, 46.6768],
+
+            [24.7150, 46.6752],
+
+            [24.7142, 46.6745]
+
         ];
 
 
-        ids.forEach(id => {
+        /* =========================
+           EVENT LOCATIONS
+        ========================= */
 
-            const element =
-                document.getElementById(id);
+        const eventLocations = {
 
-            if (element) {
+            trafficViolation:
+                [24.7160, 46.6780],
 
-                element.textContent =
-                    battery + "%";
+            fire:
+                [24.7172, 46.6810],
 
-            }
+            emergency:
+                [24.7165, 46.6795]
 
-        });
-
-
-        const batteryBar =
-            document.getElementById(
-                "droneBatteryBar"
-            );
-
-        if (batteryBar) {
-
-            batteryBar.style.width =
-                battery + "%";
-
-        }
-
-    }
+        };
 
 
-    // =================================================
-    // EVENT LOG
-    // =================================================
+        /* =========================
+           VARIABLES
+        ========================= */
 
-    function setEventLog(text) {
+        let pathIndex = 0;
 
-        const eventLog =
-            document.getElementById(
-                "eventLog"
-            );
+        let patrolTimer = null;
 
-        if (eventLog) {
+        let responseTimer = null;
 
-            eventLog.innerHTML =
-                text;
+        let maintenanceTimer = null;
 
-        }
+        let battery = 100;
 
-    }
+        let eventMarker = null;
 
 
-    function addEventLog(text) {
+        window.detectedEvents = [];
 
-        const eventLog =
-            document.getElementById(
-                "eventLog"
-            );
+        window.currentDroneBattery = 100;
 
-        if (eventLog) {
+        window.currentDroneStatus =
+            "Patrolling";
 
-            eventLog.innerHTML +=
-                "<br>" + text;
+        window.currentAlertKey =
+            "noAlerts";
 
-        }
+        window.currentMaintenanceKey =
+            "ready";
 
-    }
-
-
-    // =================================================
-    // START PATROL
-    // =================================================
-
-    function startPatrol() {
-
-        setDroneStatus(
-            "Patrolling"
-        );
+        window.currentInspectionKey =
+            "ready";
 
 
-        if (patrolInterval) {
-            return;
-        }
+        /* =========================
+           BATTERY UI
+        ========================= */
 
+        function updateBatteryUI() {
 
-        setEventLog(
-            t("patrolStarted")
-        );
-
-
-        patrolInterval =
-            setInterval(() => {
-
-                drone.setLatLng(
-                    patrolPath[
-                        patrolIndex
-                    ]
+            battery =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        battery
+                    )
                 );
 
 
-                map.panTo(
-                    patrolPath[
-                        patrolIndex
-                    ]
-                );
+            window.currentDroneBattery =
+                battery;
 
 
-                patrolIndex =
-                    (
-                        patrolIndex + 1
-                    ) %
-                    patrolPath.length;
+            const batteryElements = [
+
+                "batteryText",
+
+                "dashboardBattery",
+
+                "droneBatteryPage",
+
+                "tableDroneBattery"
+
+            ];
 
 
-                battery =
-                    Math.max(
-                        0,
-                        battery - 1
+            batteryElements.forEach(id => {
+
+                const element =
+                    document.getElementById(
+                        id
                     );
 
 
-                updateBattery();
+                if (element) {
+
+                    element.textContent =
+                        battery + "%";
+
+                }
+
+            });
 
 
-                if (battery <= 20) {
+            const batteryBar =
+                document.getElementById(
+                    "droneBatteryBar"
+                );
 
-                    const alertText =
+
+            if (batteryBar) {
+
+                batteryBar.style.width =
+                    battery + "%";
+
+
+                batteryBar.classList.toggle(
+                    "battery-medium",
+                    battery > 20 &&
+                    battery <= 50
+                );
+
+
+                batteryBar.classList.toggle(
+                    "battery-low",
+                    battery <= 20
+                );
+
+            }
+        }
+
+
+        /* =========================
+           REPORT COUNTERS
+        ========================= */
+
+        function updateReportCounters() {
+
+            const counters = [
+
+                [
+                    "reportViolations",
+                    "trafficViolation"
+                ],
+
+                [
+                    "reportFires",
+                    "fire"
+                ],
+
+                [
+                    "reportEmergencies",
+                    "emergency"
+                ]
+
+            ];
+
+
+            counters.forEach(
+                ([elementId, type]) => {
+
+                    const element =
                         document.getElementById(
-                            "alertText"
+                            elementId
                         );
 
 
-                    if (alertText) {
+                    if (element) {
 
-                        alertText.textContent =
-                            getUILanguage() === "ar"
-                                ? "⚠️ البطارية منخفضة"
-                                : "⚠️ Low Battery";
+                        element.textContent =
+                            window.detectedEvents
+                                .filter(
+                                    event =>
+                                        event.type ===
+                                        type
+                                )
+                                .length;
 
                     }
 
                 }
-
-            }, 2000);
-
-    }
-
-
-    // =================================================
-    // STOP PATROL
-    // =================================================
-
-    function stopPatrol() {
-
-        if (patrolInterval) {
-
-            clearInterval(
-                patrolInterval
             );
-
-            patrolInterval = null;
-
         }
 
 
-        addEventLog(
-            t("patrolStopped")
-        );
+        /* =========================
+           START PATROL
+        ========================= */
 
-    }
+        function startPatrol() {
 
+            if (
+                patrolTimer ||
+                battery <= 0
+            ) {
 
-    // =================================================
-    // EMERGENCY
-    // =================================================
+                if (battery <= 0) {
 
-    const emergencyLocation = [
-        24.7165,
-        46.6795
-    ];
+                    window.currentAlertKey =
+                        "lowBattery";
 
+                    updateDynamicLanguage();
 
-    let emergencyMarker = null;
+                }
 
+                return;
 
-    function simulateEmergency() {
-
-        stopPatrol();
-
-
-        setDroneStatus(
-            "Responding"
-        );
+            }
 
 
-        if (!emergencyMarker) {
+            setDroneStatus(
+                "Patrolling"
+            );
 
-            emergencyMarker =
-                L.marker(
-                    emergencyLocation
-                )
-                .addTo(map)
-                .bindPopup(
-                    getUILanguage() === "ar"
-                        ? "🚨 حادث مروري"
-                        : "🚨 Traffic Accident"
+
+            window.currentAlertKey =
+                "noAlerts";
+
+
+            window.currentInspectionKey =
+                "ready";
+
+
+            setEventLog([
+                "patrolStarted"
+            ]);
+
+
+            patrolTimer =
+                setInterval(
+                    () => {
+
+                        drone.setLatLng(
+                            patrolPath[
+                                pathIndex
+                            ]
+                        );
+
+
+                        pathIndex =
+                            (
+                                pathIndex + 1
+                            ) %
+                            patrolPath.length;
+
+
+                        map.panTo(
+                            drone.getLatLng(),
+                            {
+                                animate: true,
+                                duration: 0.4
+                            }
+                        );
+
+
+                        battery--;
+
+                        updateBatteryUI();
+
+
+                        if (
+                            battery <= 20
+                        ) {
+
+                            window.currentAlertKey =
+                                "lowBattery";
+
+                        }
+
+
+                        if (
+                            battery <= 0
+                        ) {
+
+                            stopPatrol(
+                                true
+                            );
+
+                        }
+
+
+                        updateDynamicLanguage();
+
+                    },
+                    2000
+                );
+        }
+
+
+        /* =========================
+           STOP PATROL
+        ========================= */
+
+        function stopPatrol(
+            updateStatus = true
+        ) {
+
+            if (patrolTimer) {
+
+                clearInterval(
+                    patrolTimer
                 );
 
+                patrolTimer = null;
+
+            }
+
+
+            if (updateStatus) {
+
+                setDroneStatus(
+                    "Stopped"
+                );
+
+
+                setEventLog([
+                    "patrolStopped"
+                ]);
+
+
+                updateDynamicLanguage();
+
+            }
         }
 
 
-        emergencyMarker.openPopup();
+        /* =========================
+           EVENT RESPONSE
+        ========================= */
+
+        function respondToEvent(
+            type
+        ) {
+
+            stopPatrol(false);
 
 
-        drone.setLatLng(
-            emergencyLocation
-        );
+            if (responseTimer) {
+
+                clearTimeout(
+                    responseTimer
+                );
+
+            }
 
 
-        map.panTo(
-            emergencyLocation
-        );
+            const alertKeys = {
+
+                trafficViolation:
+                    "trafficViolation",
+
+                fire:
+                    "fireDetected",
+
+                emergency:
+                    "emergencyDetected"
+
+            };
 
 
-        battery = 95;
+            const responseKeys = {
 
-        updateBattery();
+                trafficViolation:
+                    "violationResponse",
 
+                fire:
+                    "fireResponse",
 
-        updateUIAfterEmergency();
+                emergency:
+                    "emergencyResponse"
 
-    }
-
-
-    // =================================================
-    // MAINTENANCE
-    // =================================================
-
-    function startMaintenance() {
-
-        updateMaintenanceStarting();
+            };
 
 
-        addEventLog(
-            getUILanguage() === "ar"
-                ? "🧹 بدأت عملية تنظيف الدرون."
-                : "🧹 Drone cleaning started."
-        );
+            const alertKey =
+                alertKeys[type];
 
 
-        setTimeout(() => {
-
-            updateMaintenanceCompleted();
-
-        }, 3000);
-
-    }
+            const responseKey =
+                responseKeys[type];
 
 
-    // =================================================
-    // RESET MISSION
-    // =================================================
+            /* تسجيل الحدث */
 
-    function resetMission() {
+            window.detectedEvents.push({
 
-        if (patrolInterval) {
+                type: type,
 
-            clearInterval(
-                patrolInterval
+                time: new Date()
+
+            });
+
+
+            updateReportCounters();
+
+
+            /* تحديث الحالة */
+
+            window.currentAlertKey =
+                alertKey;
+
+
+            window.currentInspectionKey =
+                "inspectionStarted";
+
+
+            setDroneStatus(
+                "Responding"
             );
 
-            patrolInterval = null;
+
+            /* إزالة العلامة القديمة */
+
+            if (eventMarker) {
+
+                map.removeLayer(
+                    eventMarker
+                );
+
+            }
+
+
+            /* إنشاء علامة الحدث */
+
+            eventMarker =
+                L.marker(
+                    eventLocations[type]
+                )
+                    .addTo(map)
+                    .bindPopup(
+                        t(alertKey)
+                    );
+
+
+            eventMarker.openPopup();
+
+
+            /* تحريك الدرون */
+
+            drone.setLatLng(
+                eventLocations[type]
+            );
+
+
+            map.panTo(
+                eventLocations[type],
+                {
+                    animate: true,
+                    duration: 0.7
+                }
+            );
+
+
+            /* استهلاك البطارية */
+
+            battery =
+                Math.max(
+                    0,
+                    battery - 5
+                );
+
+
+            updateBatteryUI();
+
+
+            /* تحديث سجل الأحداث */
+
+            updateUIAfterEvent(
+                alertKey,
+                responseKey
+            );
+
+
+            /*
+             * بعد فترة قصيرة
+             * يصل الدرون للموقع
+             */
+
+            responseTimer =
+                setTimeout(
+                    () => {
+
+                        addEventLog(
+                            "droneArrived"
+                        );
+
+
+                        updateDynamicLanguage();
+
+
+                        responseTimer =
+                            null;
+
+                    },
+                    1200
+                );
+        }
+
+
+        /* =========================
+           MAINTENANCE
+        ========================= */
+
+        function startMaintenance() {
+
+            if (maintenanceTimer) {
+
+                clearTimeout(
+                    maintenanceTimer
+                );
+
+            }
+
+
+            updateMaintenanceStarting();
+
+
+            addEventLog(
+                "cleaning"
+            );
+
+
+            maintenanceTimer =
+                setTimeout(
+                    () => {
+
+                        updateMaintenanceCompleted();
+
+
+                        maintenanceTimer =
+                            null;
+
+                    },
+                    3000
+                );
+        }
+
+
+        /* =========================
+           RESET
+        ========================= */
+
+        function resetMission() {
+
+            if (patrolTimer) {
+
+                clearInterval(
+                    patrolTimer
+                );
+
+            }
+
+
+            if (responseTimer) {
+
+                clearTimeout(
+                    responseTimer
+                );
+
+            }
+
+
+            if (maintenanceTimer) {
+
+                clearTimeout(
+                    maintenanceTimer
+                );
+
+            }
+
+
+            patrolTimer =
+                null;
+
+            responseTimer =
+                null;
+
+            maintenanceTimer =
+                null;
+
+
+            pathIndex = 0;
+
+            battery = 100;
+
+
+            window.detectedEvents =
+                [];
+
+
+            window.currentDroneBattery =
+                100;
+
+
+            window.currentDroneStatus =
+                "Patrolling";
+
+
+            window.currentAlertKey =
+                "noAlerts";
+
+
+            window.currentMaintenanceKey =
+                "ready";
+
+
+            window.currentInspectionKey =
+                "ready";
+
+
+            /* إعادة الدرون للبداية */
+
+            drone.setLatLng(
+                patrolPath[0]
+            );
+
+
+            map.panTo(
+                patrolPath[0]
+            );
+
+
+            /* إزالة علامة الحدث */
+
+            if (eventMarker) {
+
+                map.removeLayer(
+                    eventMarker
+                );
+
+                eventMarker = null;
+
+            }
+
+
+            updateReportCounters();
+
+            updateBatteryUI();
+
+
+            setDroneStatus(
+                "Patrolling"
+            );
+
+
+            setEventLog([
+                "missionReset"
+            ]);
+
+
+            updateDynamicLanguage();
 
         }
 
 
-        patrolIndex = 0;
+        /* =========================
+           LANGUAGE FOR MAP POPUP
+        ========================= */
 
-        battery = 100;
+        window.updateEmergencyPopupLanguage =
+            () => {
+
+                if (
+                    eventMarker &&
+                    window.currentAlertKey
+                ) {
+
+                    eventMarker.setPopupContent(
+                        t(
+                            window.currentAlertKey
+                        )
+                    );
+
+                }
+
+            };
 
 
-        window.currentDroneBattery =
-            battery;
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        document
+            .getElementById(
+                "startPatrolBtn"
+            )
+            ?.addEventListener(
+                "click",
+                startPatrol
+            );
 
 
-        drone.setLatLng(
-            patrolPath[0]
+        document
+            .getElementById(
+                "stopPatrolBtn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    stopPatrol(true);
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "trafficViolationBtn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    respondToEvent(
+                        "trafficViolation"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "fireBtn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    respondToEvent(
+                        "fire"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "emergencyBtn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    respondToEvent(
+                        "emergency"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "maintenanceBtn"
+            )
+            ?.addEventListener(
+                "click",
+                startMaintenance
+            );
+
+
+        document
+            .getElementById(
+                "resetBtn"
+            )
+            ?.addEventListener(
+                "click",
+                resetMission
+            );
+
+
+        /* =========================
+           LANGUAGE CHANGE
+        ========================= */
+
+        window.addEventListener(
+            "languageChanged",
+            () => {
+
+                updateBatteryUI();
+
+                updateDynamicLanguage();
+
+            }
         );
 
 
-        map.panTo(
-            patrolPath[0]
-        );
+        /* =========================
+           INITIAL STATE
+        ========================= */
 
-
-        updateBattery();
-
+        updateBatteryUI();
 
         setDroneStatus(
             "Patrolling"
         );
 
-
-        const alertText =
-            document.getElementById(
-                "alertText"
-            );
-
-
-        if (alertText) {
-
-            alertText.textContent =
-                t("noAlerts");
-
-        }
-
-
-        const maintenanceStatus =
-            document.getElementById(
-                "maintenanceStatus"
-            );
-
-
-        if (maintenanceStatus) {
-
-            maintenanceStatus.textContent =
-                t("ready");
-
-        }
-
-
-        setEventLog(
-            t("missionReset")
-        );
-
-
-        if (emergencyMarker) {
-
-            map.removeLayer(
-                emergencyMarker
-            );
-
-            emergencyMarker = null;
-
-        }
+        updateDynamicLanguage();
 
     }
-
-
-    // =================================================
-    // BUTTONS
-    // =================================================
-
-    const startButton =
-        document.getElementById(
-            "startPatrolBtn"
-        );
-
-    const stopButton =
-        document.getElementById(
-            "stopPatrolBtn"
-        );
-
-    const emergencyButton =
-        document.getElementById(
-            "emergencyBtn"
-        );
-
-    const maintenanceButton =
-        document.getElementById(
-            "maintenanceBtn"
-        );
-
-    const resetButton =
-        document.getElementById(
-            "resetBtn"
-        );
-
-
-    if (startButton) {
-
-        startButton.addEventListener(
-            "click",
-            startPatrol
-        );
-
-    }
-
-
-    if (stopButton) {
-
-        stopButton.addEventListener(
-            "click",
-            stopPatrol
-        );
-
-    }
-
-
-    if (emergencyButton) {
-
-        emergencyButton.addEventListener(
-            "click",
-            simulateEmergency
-        );
-
-    }
-
-
-    if (maintenanceButton) {
-
-        maintenanceButton.addEventListener(
-            "click",
-            startMaintenance
-        );
-
-    }
-
-
-    if (resetButton) {
-
-        resetButton.addEventListener(
-            "click",
-            resetMission
-        );
-
-    }
-
-
-    // =================================================
-    // LANGUAGE CHANGE SYNC
-    // =================================================
-
-    window.addEventListener(
-        "languageChanged",
-        function () {
-
-            updateDynamicLanguage();
-
-        }
-    );
-
-
-    // =================================================
-    // INITIAL STATE
-    // =================================================
-
-    updateBattery();
-
-    setDroneStatus(
-        "Patrolling"
-    );
-
-}
+);

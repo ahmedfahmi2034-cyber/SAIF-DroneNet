@@ -1,172 +1,423 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIF DroneNet</title>
+
+    <title>SAIF DroneNet | تسجيل الدخول</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="login-page">
 
-<div class="login-box">
+    <!-- خلفية الصفحة -->
+    <div class="login-background">
 
-    <div class="language-switch">
+        <div class="bg-grid"></div>
 
-        <button onclick="setLanguage('ar')">
-            العربية
-        </button>
-
-        <button onclick="setLanguage('en')">
-            English
-        </button>
-
-        <button onclick="toggleTheme()" id="themeButton">
-            ☀️ Light
-        </button>
+        <div class="bg-glow glow-one"></div>
+        <div class="bg-glow glow-two"></div>
 
     </div>
 
-    <h1>🛸 SAIF DroneNet</h1>
 
-    <p id="loginDescription">
-        Smart Drone Monitoring Platform
-    </p>
+    <!-- المحتوى الرئيسي -->
+    <main class="login-container">
 
-    <input
-        id="usernameInput"
-        type="text"
-        placeholder="Username"
-    >
+        <!-- الجانب التعريفي -->
+        <section class="login-info">
 
-    <input
-        id="passwordInput"
-        type="password"
-        placeholder="Password"
-    >
+            <div class="login-brand">
 
-    <button id="loginButton" onclick="login()">
-        Login
-    </button>
+                <div class="login-brand-icon">
+                    🛡️
+                </div>
 
-</div>
+                <div>
+                    <strong>SAIF</strong>
+                    <span>DroneNet</span>
+                </div>
 
-<script>
-
-function setLanguage(lang) {
-
-    const description =
-        document.getElementById("loginDescription");
-
-    const username =
-        document.getElementById("usernameInput");
-
-    const password =
-        document.getElementById("passwordInput");
-
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const themeButton =
-        document.getElementById("themeButton");
+            </div>
 
 
-    if (lang === "ar") {
+            <div class="login-info-content">
 
-        document.documentElement.lang = "ar";
-        document.documentElement.dir = "rtl";
+                <div class="status-pill">
 
-        description.textContent =
-            "منصة مراقبة الدرونات الذكية";
+                    <span class="status-dot"></span>
 
-        username.placeholder =
-            "اسم المستخدم";
+                    <span
+                        data-ar="النظام يعمل"
+                        data-en="System Online">
+                        النظام يعمل
+                    </span>
 
-        password.placeholder =
-            "كلمة المرور";
-
-        loginButton.textContent =
-            "دخول";
-
-        themeButton.textContent =
-            document.body.classList.contains("light-mode")
-                ? "🌙 داكن"
-                : "☀️ فاتح";
-
-    } else {
-
-        document.documentElement.lang = "en";
-        document.documentElement.dir = "ltr";
-
-        description.textContent =
-            "Smart Drone Monitoring Platform";
-
-        username.placeholder =
-            "Username";
-
-        password.placeholder =
-            "Password";
-
-        loginButton.textContent =
-            "Login";
-
-        themeButton.textContent =
-            document.body.classList.contains("light-mode")
-                ? "🌙 Dark"
-                : "☀️ Light";
-    }
-    savePreferences();
-}
+                </div>
 
 
+                <h1
+                    data-ar="مراقبة أمنية ذكية من السماء"
+                    data-en="Smart Security Monitoring from the Sky">
+
+                    مراقبة أمنية ذكية من السماء
+
+                </h1>
 
 
-function toggleTheme() {
+                <p
+                    data-ar="منصة نموذجية لمراقبة المناطق بواسطة الدرونات والاستجابة السريعة للأحداث."
+                    data-en="A prototype platform for area monitoring using drones and rapid event response.">
 
-    document.body.classList.toggle("light-mode");
+                    منصة نموذجية لمراقبة المناطق بواسطة الدرونات
+                    والاستجابة السريعة للأحداث.
 
-    const button =
-        document.getElementById("themeButton");
-
-    const isArabic =
-        document.documentElement.lang === "ar";
-
-
-    if (document.body.classList.contains("light-mode")) {
-
-        button.textContent =
-            isArabic ? "🌙 داكن" : "🌙 Dark";
-
-    } else {
-
-        button.textContent =
-            isArabic ? "☀️ فاتح" : "☀️ Light";
-    }
-    savePreferences();
-}
+                </p>
 
 
-function login() {
+                <!-- المميزات -->
+                <div class="login-features">
 
-    window.location.href = "dashboard.html";
+                    <div class="login-feature">
 
-}
-function savePreferences() {
-    localStorage.setItem(
-        "language",
-        document.documentElement.lang
-    );
+                        <div class="feature-icon">
+                            🛡️
+                        </div>
 
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("light-mode")
-            ? "light"
-            : "dark"
-    );
-}
+                        <div>
 
-</script>
+                            <strong
+                                data-ar="مراقبة مستمرة"
+                                data-en="Continuous Monitoring">
+
+                                مراقبة مستمرة
+
+                            </strong>
+
+                            <span
+                                data-ar="مراقبة المناطق بشكل مستمر أثناء الدورية."
+                                data-en="Continuous area monitoring during patrols.">
+
+                                مراقبة المناطق بشكل مستمر أثناء الدورية.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-feature">
+
+                        <div class="feature-icon">
+                            ⚡
+                        </div>
+
+                        <div>
+
+                            <strong
+                                data-ar="استجابة أسرع"
+                                data-en="Faster Response">
+
+                                استجابة أسرع
+
+                            </strong>
+
+                            <span
+                                data-ar="إرسال الدرون إلى موقع الحدث لفحصه بسرعة."
+                                data-en="Send the drone to an event location for rapid inspection.">
+
+                                إرسال الدرون إلى موقع الحدث لفحصه بسرعة.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-feature">
+
+                        <div class="feature-icon">
+                            🌱
+                        </div>
+
+                        <div>
+
+                            <strong
+                                data-ar="هدف بيئي"
+                                data-en="Environmental Goal">
+
+                                هدف بيئي
+
+                            </strong>
+
+                            <span
+                                data-ar="تقليل الاعتماد على الدوريات الأرضية الروتينية."
+                                data-en="Reduce reliance on routine ground patrols.">
+
+                                تقليل الاعتماد على الدوريات الأرضية الروتينية.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="login-info-footer">
+
+                <span>SAIF DroneNet</span>
+
+                <span>•</span>
+
+                <span
+                    data-ar="نموذج أولي"
+                    data-en="Prototype">
+
+                    نموذج أولي
+
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- بطاقة تسجيل الدخول -->
+        <section class="login-card">
+
+            <!-- أعلى البطاقة -->
+            <div class="login-card-top">
+
+                <div class="login-card-logo">
+                    🛸
+                </div>
+
+                <div class="login-language">
+
+                    <button
+                        type="button"
+                        onclick="setLanguage('ar')">
+
+                        العربية
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="setLanguage('en')">
+
+                        English
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- عنوان الدخول -->
+            <div class="login-heading">
+
+                <span
+                    data-ar="مرحبًا بك"
+                    data-en="Welcome">
+
+                    مرحبًا بك
+
+                </span>
+
+                <h2
+                    data-ar="تسجيل الدخول"
+                    data-en="Sign in">
+
+                    تسجيل الدخول
+
+                </h2>
+
+                <p
+                    id="loginDescription"
+                    data-ar="منصة مراقبة الدرونات الذكية"
+                    data-en="Smart Drone Monitoring Platform">
+
+                    منصة مراقبة الدرونات الذكية
+
+                </p>
+
+            </div>
+
+
+            <!-- حالة الاتصال -->
+            <div class="connection-status">
+
+                <span class="connection-icon">
+                    🔒
+                </span>
+
+                <div>
+
+                    <strong
+                        data-ar="اتصال آمن"
+                        data-en="Secure Connection">
+
+                        اتصال آمن
+
+                    </strong>
+
+                    <span
+                        data-ar="بيئة النظام محمية"
+                        data-en="Protected system environment">
+
+                        بيئة النظام محمية
+
+                    </span>
+
+                </div>
+
+                <span class="connection-dot"></span>
+
+            </div>
+
+
+            <!-- النموذج -->
+            <form
+                class="login-form"
+                onsubmit="event.preventDefault(); login();">
+
+                <label
+                    for="usernameInput"
+                    data-ar="اسم المستخدم"
+                    data-en="Username">
+
+                    اسم المستخدم
+
+                </label>
+
+
+                <div class="login-input">
+
+                    <span>
+                        👤
+                    </span>
+
+                    <input
+                        id="usernameInput"
+                        type="text"
+                        autocomplete="username"
+                        placeholder="اسم المستخدم"
+                        data-placeholder-ar="اسم المستخدم"
+                        data-placeholder-en="Username">
+
+                </div>
+
+
+                <label
+                    for="passwordInput"
+                    data-ar="كلمة المرور"
+                    data-en="Password">
+
+                    كلمة المرور
+
+                </label>
+
+
+                <div class="login-input">
+
+                    <span>
+                        🔐
+                    </span>
+
+                    <input
+                        id="passwordInput"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="كلمة المرور"
+                        data-placeholder-ar="كلمة المرور"
+                        data-placeholder-en="Password">
+
+                </div>
+
+
+                <button
+                    id="loginButton"
+                    type="submit"
+                    class="login-main-button">
+
+                    <span
+                        data-ar="دخول إلى النظام"
+                        data-en="Sign in to system">
+
+                        دخول إلى النظام
+
+                    </span>
+
+                    <span class="login-arrow">
+                        ←
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- الوضع الليلي -->
+            <div class="login-options">
+
+                <button
+                    type="button"
+                    id="themeButton"
+                    class="theme-button"
+                    onclick="toggleTheme()">
+
+                    ☀️ فاتح
+
+                </button>
+
+            </div>
+
+
+            <!-- أسفل البطاقة -->
+            <div class="login-card-footer">
+
+                <span>
+                    🛡️
+                </span>
+
+                <span
+                    data-ar="SAIF DroneNet"
+                    data-en="SAIF DroneNet">
+
+                    SAIF DroneNet
+
+                </span>
+
+                <span>•</span>
+
+                <span
+                    data-ar="نظام مراقبة ذكي"
+                    data-en="Smart Monitoring System">
+
+                    نظام مراقبة ذكي
+
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script src="js/ui.js" defer></script>
 
 </body>
+
 </html>

@@ -1,138 +1,72 @@
-/* =====================================================
-   SAIF DRONENET - UI LANGUAGE SYSTEM
-===================================================== */
-
-
-/* =========================================
-   GET CURRENT LANGUAGE
-========================================= */
-
-function getUILanguage() {
-
-    return localStorage.getItem("language") || "ar";
-
-}
-
-
-/* =========================================
-   TRANSLATIONS
-========================================= */
+/* SAIF DroneNet - UI */
 
 const UI_TRANSLATIONS = {
-
     ar: {
+        noAlerts: "لا توجد تنبيهات",
+        patrolling: "في الدورية",
+        responding: "يستجيب للحدث",
+        stopped: "متوقف",
+        ready: "جاهز",
 
-        /* General */
+        trafficViolation: "🚗 تم رصد مخالفة مرورية",
+        fireDetected: "🔥 تم اكتشاف حريق",
+        emergencyDetected: "🚑 تم اكتشاف حالة طارئة",
 
-        noAlerts:
-            "لا توجد تنبيهات",
+        droneResponding: "🛸 الدرون يستجيب للحدث",
+        droneArrived: "📍 وصل الدرون إلى موقع الحدث",
 
-        patrolling:
-            "في الدورية",
+        cleaning: "🧹 جارٍ تنظيف الدرون...",
+        cleaningCompleted: "✅ اكتمل تنظيف الدرون",
 
-        responding:
-            "يستجيب للطوارئ",
+        noEvents: "لا توجد أحداث حتى الآن.",
+        missionReset: "🔄 تمت إعادة ضبط المهمة. الدرون جاهز.",
 
-        stopped:
-            "متوقف",
+        patrolStarted: "🛸 بدأت دورية الدرون.",
+        patrolStopped: "⏹ توقفت دورية الدرون.",
 
-        ready:
-            "جاهز",
+        violationResponse:
+            "🛸 الدرون يتجه لفحص المخالفة.",
 
-
-        /* Emergency */
-
-        trafficAccident:
-            "🚨 تم اكتشاف حادث مروري",
-
-        droneResponding:
-            "🛸 الدرون يستجيب لحالة الطوارئ",
-
-        droneArrived:
-            "📍 وصل الدرون إلى موقع الطوارئ",
-
-
-        /* Maintenance */
-
-        cleaning:
-            "🧹 جارٍ تنظيف الدرون...",
-
-        cleaningCompleted:
-            "✅ اكتمل تنظيف الدرون",
-
-
-        /* Events */
-
-        noEvents:
-            "لا توجد أحداث حتى الآن.",
-
-        missionReset:
-            "🔄 تمت إعادة ضبط المهمة. الدرون جاهز.",
-
-        patrolStarted:
-            "🛸 بدأت دورية الدرون.",
-
-        patrolStopped:
-            "⏹ توقفت دورية الدرون.",
-
-
-        /* Emergency Event */
-
-        emergencyDetected:
-            "🚨 تم اكتشاف حادث مروري.",
+        fireResponse:
+            "🛸 الدرون يتجه لفحص الحريق.",
 
         emergencyResponse:
-            "🛸 الدرون يستجيب لحالة الطوارئ.",
+            "🛸 الدرون يتجه لفحص الحالة الطارئة.",
 
-        emergencyArrived:
-            "📍 وصل الدرون إلى موقع الطوارئ."
+        lowBattery:
+            "⚠️ البطارية منخفضة",
 
-
+        inspectionStarted:
+            "🔎 بدأ فحص الحدث."
     },
 
-
     en: {
+        noAlerts: "No Alerts",
+        patrolling: "Patrolling",
+        responding: "Responding to Event",
+        stopped: "Stopped",
+        ready: "Ready",
 
-        /* General */
+        trafficViolation:
+            "🚗 Traffic violation detected",
 
-        noAlerts:
-            "No Alerts",
+        fireDetected:
+            "🔥 Fire detected",
 
-        patrolling:
-            "Patrolling",
-
-        responding:
-            "Responding",
-
-        stopped:
-            "Stopped",
-
-        ready:
-            "Ready",
-
-
-        /* Emergency */
-
-        trafficAccident:
-            "🚨 Traffic Accident Detected",
+        emergencyDetected:
+            "🚑 Emergency detected",
 
         droneResponding:
-            "🛸 Drone responding to emergency",
+            "🛸 Drone responding to event",
 
         droneArrived:
-            "📍 Drone arrived at emergency location",
-
-
-        /* Maintenance */
+            "📍 Drone arrived at event location",
 
         cleaning:
             "🧹 Cleaning in progress...",
 
         cleaningCompleted:
             "✅ Cleaning completed",
-
-
-        /* Events */
 
         noEvents:
             "No events yet.",
@@ -146,186 +80,219 @@ const UI_TRANSLATIONS = {
         patrolStopped:
             "⏹ Drone patrol stopped.",
 
+        violationResponse:
+            "🛸 Drone moving to inspect the violation.",
 
-        /* Emergency Event */
-
-        emergencyDetected:
-            "🚨 Traffic accident detected.",
+        fireResponse:
+            "🛸 Drone moving to inspect the fire.",
 
         emergencyResponse:
-            "🛸 Drone responding to emergency.",
+            "🛸 Drone moving to inspect the emergency.",
 
-        emergencyArrived:
-            "📍 Drone arrived at emergency location."
+        lowBattery:
+            "⚠️ Low Battery",
 
+        inspectionStarted:
+            "🔎 Event inspection started."
     }
-
 };
 
 
-/* =========================================
-   TRANSLATION HELPER
-========================================= */
+/* =========================
+   LANGUAGE
+========================= */
+
+function getUILanguage() {
+    return localStorage.getItem("language") || "ar";
+}
+
 
 function t(key) {
 
-    const language =
-        getUILanguage();
+    const language = getUILanguage();
 
-    return UI_TRANSLATIONS[language][key];
+    return UI_TRANSLATIONS[language]?.[key] || key;
+}
+
+
+function applyLanguage() {
+
+    const language = getUILanguage();
+
+    document.documentElement.lang = language;
+
+    document.documentElement.dir =
+        language === "ar" ? "rtl" : "ltr";
+
+
+    document
+        .querySelectorAll("[data-ar][data-en]")
+        .forEach(element => {
+
+            element.textContent =
+                language === "ar"
+                    ? element.dataset.ar
+                    : element.dataset.en;
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-placeholder-ar][data-placeholder-en]"
+        )
+        .forEach(element => {
+
+            element.placeholder =
+                language === "ar"
+                    ? element.dataset.placeholderAr
+                    : element.dataset.placeholderEn;
+
+        });
+
+
+    updateThemeButtons();
+
+    updateDynamicLanguage();
+
+
+    window.dispatchEvent(
+        new CustomEvent("languageChanged", {
+            detail: {
+                language: language
+            }
+        })
+    );
+}
+
+
+function setLanguage(language) {
+
+    if (language !== "ar" && language !== "en") {
+        return;
+    }
+
+    localStorage.setItem(
+        "language",
+        language
+    );
+
+    applyLanguage();
+}
+
+
+function changeDashboardLanguage(language) {
+    setLanguage(language);
+}
+
+
+function getCurrentLanguage() {
+    return getUILanguage();
+}
+
+
+function applyDashboardLanguage() {
+    applyLanguage();
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login() {
+
+    window.location.href = "dashboard.html";
 
 }
 
 
-/* =========================================
-   UPDATE DYNAMIC TEXT
-========================================= */
+/* =========================
+   THEME
+========================= */
 
-function updateDynamicLanguage() {
+function toggleTheme() {
 
-    const language =
-        getUILanguage();
-
-
-    /*
-       Battery
-    */
-
-    const battery =
-        window.currentDroneBattery !== undefined
-            ? window.currentDroneBattery
-            : 100;
+    document.body.classList.toggle(
+        "light-mode"
+    );
 
 
-    const batteryText =
-        document.getElementById(
-            "batteryText"
-        );
-
-    if (batteryText) {
-
-        batteryText.textContent =
-            battery + "%";
-
-    }
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light-mode")
+            ? "light"
+            : "dark"
+    );
 
 
-    const cardBattery =
-        document.getElementById(
-            "cardBattery"
-        );
-
-    if (cardBattery) {
-
-        cardBattery.textContent =
-            battery + "%";
-
-    }
-
-
-    const dashboardBattery =
-        document.getElementById(
-            "dashboardBattery"
-        );
-
-    if (dashboardBattery) {
-
-        dashboardBattery.textContent =
-            battery + "%";
-
-    }
-
-
-    const droneBatteryPage =
-        document.getElementById(
-            "droneBatteryPage"
-        );
-
-    if (droneBatteryPage) {
-
-        droneBatteryPage.textContent =
-            battery + "%";
-
-    }
-
-
-    const tableBattery =
-        document.getElementById(
-            "tableDroneBattery"
-        );
-
-    if (tableBattery) {
-
-        tableBattery.textContent =
-            battery + "%";
-
-    }
-
-
-    /*
-       Status
-    */
-
-    if (
-        window.currentDroneStatus
-    ) {
-
-        setDroneStatus(
-            window.currentDroneStatus
-        );
-
-    }
-
-
+    updateThemeButtons();
 }
 
 
-/* =========================================
+function updateThemeButtons() {
+
+    const dashboardButton =
+        document.getElementById(
+            "dashboardThemeButton"
+        );
+
+
+    const loginButton =
+        document.getElementById(
+            "themeButton"
+        );
+
+
+    const isLight =
+        document.body.classList.contains(
+            "light-mode"
+        );
+
+
+    if (dashboardButton) {
+
+        dashboardButton.textContent =
+            isLight ? "🌙" : "☀️";
+
+    }
+
+
+    if (loginButton) {
+
+        loginButton.textContent =
+            isLight
+                ? "🌙 داكن"
+                : "☀️ فاتح";
+
+    }
+}
+
+
+/* =========================
    DRONE STATUS
-========================================= */
+========================= */
 
 function translateDroneStatus(status) {
 
-    const language =
-        getUILanguage();
+    const statusMap = {
+
+        Patrolling: "patrolling",
+
+        Responding: "responding",
+
+        Stopped: "stopped",
+
+        Ready: "ready"
+
+    };
 
 
-    if (status === "Patrolling") {
-
-        return t("patrolling");
-
-    }
-
-
-    if (status === "Responding") {
-
-        return t("responding");
-
-    }
-
-
-    if (status === "Stopped") {
-
-        return t("stopped");
-
-    }
-
-
-    if (status === "Ready") {
-
-        return t("ready");
-
-    }
-
-
-    return status;
-
+    return t(
+        statusMap[status] || status
+    );
 }
 
-
-/* =========================================
-   SET DRONE STATUS
-========================================= */
 
 function setDroneStatus(status) {
 
@@ -334,83 +301,258 @@ function setDroneStatus(status) {
 
 
     const translated =
-        translateDroneStatus(
-            status
-        );
+        translateDroneStatus(status);
 
 
-    const statusText =
-        document.getElementById(
-            "statusText"
-        );
+    const elements = [
 
-    if (statusText) {
+        "statusText",
 
-        statusText.textContent =
-            translated;
+        "droneStatusPage",
 
-    }
+        "tableDroneStatus"
+
+    ];
 
 
-    const cardStatus =
-        document.getElementById(
-            "cardStatus"
-        );
+    elements.forEach(id => {
 
-    if (cardStatus) {
-
-        cardStatus.textContent =
-            translated;
-
-    }
+        const element =
+            document.getElementById(id);
 
 
-    const droneStatusPage =
-        document.getElementById(
-            "droneStatusPage"
-        );
+        if (element) {
 
-    if (droneStatusPage) {
+            element.textContent =
+                translated;
 
-        droneStatusPage.textContent =
-            translated;
+        }
 
-    }
-
-
-    const tableStatus =
-        document.getElementById(
-            "tableDroneStatus"
-        );
-
-    if (tableStatus) {
-
-        tableStatus.textContent =
-            translated;
-
-    }
-
+    });
 }
 
 
-/* =========================================
-   UPDATE EMERGENCY UI
-========================================= */
+/* =========================
+   EVENT LOG
+========================= */
 
-function updateUIAfterEmergency() {
+function renderEventLog() {
 
-    const alertText =
+    const eventLog =
+        document.getElementById(
+            "eventLog"
+        );
+
+
+    if (!eventLog) {
+        return;
+    }
+
+
+    const events =
+        window.currentEventLogKeys || [];
+
+
+    if (!events.length) {
+
+        eventLog.innerHTML =
+            t("noEvents");
+
+        return;
+
+    }
+
+
+    eventLog.innerHTML =
+        events
+            .map(event => {
+
+                return `
+                    <div class="log-entry">
+                        ${t(event.key || event)}
+                    </div>
+                `;
+
+            })
+            .join("");
+}
+
+
+function setEventLog(events) {
+
+    window.currentEventLogKeys =
+        (Array.isArray(events)
+            ? events
+            : [events]
+        ).map(key => ({
+            key: key
+        }));
+
+
+    renderEventLog();
+}
+
+
+function addEventLog(key) {
+
+    if (!window.currentEventLogKeys) {
+
+        window.currentEventLogKeys = [];
+
+    }
+
+
+    window.currentEventLogKeys.push({
+        key: key
+    });
+
+
+    renderEventLog();
+}
+
+
+/* =========================
+   DYNAMIC UI
+========================= */
+
+function updateDynamicLanguage() {
+
+    const battery =
+        window.currentDroneBattery ?? 100;
+
+
+    const batteryElements = [
+
+        "batteryText",
+
+        "dashboardBattery",
+
+        "droneBatteryPage",
+
+        "tableDroneBattery"
+
+    ];
+
+
+    batteryElements.forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+
+        if (element) {
+
+            element.textContent =
+                battery + "%";
+
+        }
+
+    });
+
+
+    const eventCounter =
+        document.getElementById(
+            "dashboardEvents"
+        );
+
+
+    if (eventCounter) {
+
+        eventCounter.textContent =
+            window.detectedEvents?.length || 0;
+
+    }
+
+
+    if (window.currentDroneStatus) {
+
+        setDroneStatus(
+            window.currentDroneStatus
+        );
+
+    }
+
+
+    const alertElement =
         document.getElementById(
             "alertText"
         );
 
 
-    if (alertText) {
+    if (
+        alertElement &&
+        window.currentAlertKey
+    ) {
 
-        alertText.textContent =
-            t("trafficAccident");
+        alertElement.textContent =
+            t(window.currentAlertKey);
 
     }
+
+
+    const maintenance =
+        document.getElementById(
+            "maintenanceStatus"
+        );
+
+
+    if (
+        maintenance &&
+        window.currentMaintenanceKey
+    ) {
+
+        maintenance.textContent =
+            t(window.currentMaintenanceKey);
+
+    }
+
+
+    const inspection =
+        document.getElementById(
+            "inspectionStatus"
+        );
+
+
+    if (
+        inspection &&
+        window.currentInspectionKey
+    ) {
+
+        inspection.textContent =
+            t(window.currentInspectionKey);
+
+    }
+
+
+    renderEventLog();
+
+
+    if (
+        typeof window.updateEmergencyPopupLanguage ===
+        "function"
+    ) {
+
+        window.updateEmergencyPopupLanguage();
+
+    }
+}
+
+
+/* =========================
+   EVENT UI
+========================= */
+
+function updateUIAfterEvent(
+    alertKey,
+    responseKey
+) {
+
+    window.currentAlertKey =
+        alertKey;
+
+
+    window.currentInspectionKey =
+        "inspectionStarted";
 
 
     setDroneStatus(
@@ -418,143 +560,152 @@ function updateUIAfterEmergency() {
     );
 
 
-    const batteryText =
-        document.getElementById(
-            "batteryText"
-        );
+    setEventLog([
+
+        alertKey,
+
+        responseKey,
+
+        "inspectionStarted"
+
+    ]);
 
 
-    if (batteryText) {
-
-        batteryText.textContent =
-            "95%";
-
-    }
-
-
-    const dashboardBattery =
-        document.getElementById(
-            "dashboardBattery"
-        );
-
-
-    if (dashboardBattery) {
-
-        dashboardBattery.textContent =
-            "95%";
-
-    }
-
-
-    const eventLog =
-        document.getElementById(
-            "eventLog"
-        );
-
-
-    if (eventLog) {
-
-        eventLog.innerHTML =
-
-            t("emergencyDetected") +
-            "<br>" +
-
-            t("emergencyResponse") +
-            "<br>" +
-
-            t("emergencyArrived");
-
-    }
-
+    updateDynamicLanguage();
 }
 
 
-/* =========================================
+/* =========================
    MAINTENANCE
-========================================= */
+========================= */
 
 function updateMaintenanceStarting() {
 
-    const status =
-        document.getElementById(
-            "maintenanceStatus"
-        );
+    window.currentMaintenanceKey =
+        "cleaning";
 
 
-    if (status) {
-
-        status.textContent =
-            t("cleaning");
-
-    }
-
+    updateDynamicLanguage();
 }
 
 
 function updateMaintenanceCompleted() {
 
-    const status =
-        document.getElementById(
-            "maintenanceStatus"
-        );
+    window.currentMaintenanceKey =
+        "cleaningCompleted";
 
 
-    if (status) {
-
-        status.textContent =
-            t("cleaningCompleted");
-
-    }
+    addEventLog(
+        "cleaningCompleted"
+    );
 
 
-    const eventLog =
-        document.getElementById(
-            "eventLog"
-        );
-
-
-    if (eventLog) {
-
-        eventLog.innerHTML +=
-
-            "<br>" +
-            t("cleaningCompleted");
-
-    }
-
+    updateDynamicLanguage();
 }
 
 
-/* =========================================
-   REFRESH LANGUAGE AFTER CHANGE
-========================================= */
+/* =========================
+   NAVIGATION
+========================= */
 
-window.addEventListener(
-    "languageChanged",
-    function () {
+function showSection(section) {
 
-        updateDynamicLanguage();
+    document
+        .querySelectorAll(".page-section")
+        .forEach(page => {
+
+            page.classList.remove(
+                "active-section"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(
+            section
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active-section"
+        );
 
     }
-);
 
 
-/* =========================================
+    document
+        .querySelectorAll(".sidebar-btn")
+        .forEach(button => {
+
+            button.classList.toggle(
+
+                "active",
+
+                button.dataset.section ===
+                    section
+
+            );
+
+        });
+
+
+    if (section === "dashboard") {
+
+        setTimeout(() => {
+
+            window.dispatchEvent(
+                new Event("resize")
+            );
+
+        }, 150);
+
+    }
+}
+
+
+/* =========================
    INITIALIZATION
-========================================= */
+========================= */
 
-window.addEventListener(
-    "DOMContentLoaded",
-    function () {
+function initializePreferences() {
 
-        window.currentDroneBattery =
-            100;
+    if (
+        !["ar", "en"].includes(
+            localStorage.getItem(
+                "language"
+            )
+        )
+    ) {
 
-        window.currentDroneStatus =
-            "Patrolling";
-
-
-        updateDynamicLanguage();
+        localStorage.setItem(
+            "language",
+            "ar"
+        );
 
     }
+
+
+    if (
+        localStorage.getItem(
+            "theme"
+        ) === "light"
+    ) {
+
+        document.body.classList.add(
+            "light-mode"
+        );
+
+    }
+
+
+    applyLanguage();
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializePreferences
 );

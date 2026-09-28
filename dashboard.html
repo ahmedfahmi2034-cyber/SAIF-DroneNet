@@ -107,6 +107,8 @@
                 English
             </button>
 
+            <button id="dashboardThemeButton" onclick="toggleTheme()">☀️</button>
+
         </div>
 
     </header>
@@ -439,6 +441,23 @@
                     <div class="map-buttons">
 
                         <button
+                            id="trafficViolationBtn"
+                            class="warning-btn"
+                            data-ar="🚗 محاكاة مخالفة مرورية"
+                            data-en="🚗 Simulate Traffic Violation">
+                            🚗 محاكاة مخالفة مرورية
+                        </button>
+
+                        <button
+                            id="fireBtn"
+                            class="danger-btn"
+                            data-ar="🔥 محاكاة حريق"
+                            data-en="🔥 Simulate Fire">
+                            🔥 محاكاة حريق
+                        </button>
+
+
+                        <button
                             id="emergencyBtn"
                             class="danger-btn"
                             data-ar="🚨 محاكاة حالة طوارئ"
@@ -540,6 +559,11 @@
                             ممتازة
                         </strong>
 
+                    </div>
+
+                    <div class="camera-info">
+                        <span data-ar="🔎 الفحص" data-en="🔎 Inspection">🔎 الفحص</span>
+                        <strong id="inspectionStatus" data-ar="جاهز" data-en="Ready">جاهز</strong>
                     </div>
 
                 </aside>
@@ -1120,6 +1144,33 @@
 
 
                 <div class="mission-card">
+                    <div class="mission-icon">🚗</div>
+                    <h2 data-ar="رصد المخالفات المرورية" data-en="Traffic Violation Detection">رصد المخالفات المرورية</h2>
+                    <span class="mission-status standby" data-ar="● محاكاة" data-en="● Simulation">● محاكاة</span>
+                    <div class="mission-details">
+                        <p data-ar="محاكاة اكتشاف مخالفة وتحديد موقعها وإرسال الدرون للفحص." data-en="Simulate detecting a violation, locating it and sending the drone to inspect.">محاكاة اكتشاف مخالفة وتحديد موقعها وإرسال الدرون للفحص.</p>
+                    </div>
+                </div>
+
+                <div class="mission-card">
+                    <div class="mission-icon">🔥</div>
+                    <h2 data-ar="اكتشاف الحريق" data-en="Fire Detection">اكتشاف الحريق</h2>
+                    <span class="mission-status standby" data-ar="● محاكاة" data-en="● Simulation">● محاكاة</span>
+                    <div class="mission-details">
+                        <p data-ar="محاكاة اكتشاف حريق وإرسال الدرون لفحص الموقع بسرعة." data-en="Simulate fire detection and send the drone for rapid site inspection.">محاكاة اكتشاف حريق وإرسال الدرون لفحص الموقع بسرعة.</p>
+                    </div>
+                </div>
+
+                <div class="mission-card">
+                    <div class="mission-icon">🚑</div>
+                    <h2 data-ar="الاستجابة للحالات الطارئة" data-en="Emergency Response">الاستجابة للحالات الطارئة</h2>
+                    <span class="mission-status standby" data-ar="● جاهزة" data-en="● Ready">● جاهزة</span>
+                    <div class="mission-details">
+                        <p data-ar="إرسال الدرون إلى موقع الحالة الطارئة لفحصها بسرعة." data-en="Send the drone to the emergency location for rapid inspection.">إرسال الدرون إلى موقع الحالة الطارئة لفحصها بسرعة.</p>
+                    </div>
+                </div>
+
+                <div class="mission-card">
 
                     <div class="mission-icon">
                         🧹
@@ -1301,6 +1352,30 @@
 
 
                 <div class="alert-card warning">
+                    <div class="alert-big-icon">🚗</div>
+                    <div>
+                        <h2 data-ar="رصد المخالفات المرورية" data-en="Traffic Violations">رصد المخالفات المرورية</h2>
+                        <p data-ar="يمكن للنظام تسجيل المخالفات المكتشفة في وضع المحاكاة." data-en="The system can log detected violations in simulation mode.">يمكن للنظام تسجيل المخالفات المكتشفة في وضع المحاكاة.</p>
+                    </div>
+                </div>
+
+                <div class="alert-card danger">
+                    <div class="alert-big-icon">🔥</div>
+                    <div>
+                        <h2 data-ar="اكتشاف الحريق" data-en="Fire Detection">اكتشاف الحريق</h2>
+                        <p data-ar="عند اكتشاف الحريق تتم محاكاة إرسال الدرون إلى الموقع للفحص." data-en="When fire is detected, the drone response to the location is simulated.">عند اكتشاف الحريق تتم محاكاة إرسال الدرون إلى الموقع للفحص.</p>
+                    </div>
+                </div>
+
+                <div class="alert-card danger">
+                    <div class="alert-big-icon">🚑</div>
+                    <div>
+                        <h2 data-ar="الحالات الطارئة" data-en="Emergencies">الحالات الطارئة</h2>
+                        <p data-ar="إرسال الدرون إلى موقع الحالة لفحصها بسرعة." data-en="Send the drone to the event location for rapid inspection.">إرسال الدرون إلى موقع الحالة لفحصها بسرعة.</p>
+                    </div>
+                </div>
+
+                <div class="alert-card warning">
 
                     <div class="alert-big-icon">
                         🔋
@@ -1408,6 +1483,24 @@
 
                 </div>
 
+
+                <div class="report-card">
+                    <span>🚗</span>
+                    <small data-ar="المخالفات المكتشفة" data-en="Detected Violations">المخالفات المكتشفة</small>
+                    <strong id="reportViolations">0</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>🔥</span>
+                    <small data-ar="الحرائق المكتشفة" data-en="Detected Fires">الحرائق المكتشفة</small>
+                    <strong id="reportFires">0</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>🚑</span>
+                    <small data-ar="الحالات الطارئة" data-en="Emergencies">الحالات الطارئة</small>
+                    <strong id="reportEmergencies">0</strong>
+                </div>
 
                 <div class="report-card">
 
@@ -1765,215 +1858,6 @@
 ===================================================== -->
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-
-<!-- =====================================================
-     LANGUAGE / THEME
-===================================================== -->
-
-<script>
-
-function getCurrentLanguage() {
-
-    return localStorage.getItem("language") || "ar";
-
-}
-
-
-/* =========================================
-   APPLY LANGUAGE
-========================================= */
-
-function applyDashboardLanguage() {
-
-    const language =
-        getCurrentLanguage();
-
-
-    document.documentElement.lang =
-        language;
-
-
-    document.documentElement.dir =
-        language === "ar"
-            ? "rtl"
-            : "ltr";
-
-
-    document
-        .querySelectorAll("[data-ar][data-en]")
-        .forEach(element => {
-
-            element.textContent =
-                language === "ar"
-                    ? element.dataset.ar
-                    : element.dataset.en;
-
-        });
-
-
-    updateDynamicLanguage();
-
-}
-
-
-/* =========================================
-   CHANGE LANGUAGE
-========================================= */
-
-function changeDashboardLanguage(lang) {
-
-    localStorage.setItem(
-        "language",
-        lang
-    );
-
-
-    applyDashboardLanguage();
-
-}
-
-
-/* =========================================
-   THEME
-========================================= */
-
-function toggleTheme() {
-
-    document.body.classList.toggle(
-        "light-mode"
-    );
-
-
-    const light =
-        document.body.classList.contains(
-            "light-mode"
-        );
-
-
-    localStorage.setItem(
-        "theme",
-        light
-            ? "light"
-            : "dark"
-    );
-
-}
-
-
-/* =========================================
-   LOAD THEME
-========================================= */
-
-if (
-    localStorage.getItem("theme")
-    === "light"
-) {
-
-    document.body.classList.add(
-        "light-mode"
-    );
-
-}
-
-
-/* =========================================
-   PAGE NAVIGATION
-========================================= */
-
-function showSection(section) {
-
-    document
-        .querySelectorAll(".page-section")
-        .forEach(page => {
-
-            page.classList.remove(
-                "active-section"
-            );
-
-        });
-
-
-    const selected =
-        document.getElementById(
-            section
-        );
-
-
-    if (selected) {
-
-        selected.classList.add(
-            "active-section"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(".sidebar-btn")
-        .forEach(button => {
-
-            button.classList.remove(
-                "active"
-            );
-
-        });
-
-
-    const buttons =
-        document.querySelectorAll(
-            ".sidebar-btn"
-        );
-
-
-    const sections = [
-        "dashboard",
-        "drones",
-        "missions",
-        "alerts",
-        "reports",
-        "settings"
-    ];
-
-
-    const index =
-        sections.indexOf(section);
-
-
-    if (
-        index !== -1 &&
-        buttons[index]
-    ) {
-
-        buttons[index].classList.add(
-            "active"
-        );
-
-    }
-
-
-    if (section === "dashboard") {
-
-        setTimeout(() => {
-
-            window.dispatchEvent(
-                new Event("resize")
-            );
-
-        }, 150);
-
-    }
-
-}
-
-
-/* =========================================
-   INITIAL LANGUAGE
-========================================= */
-
-applyDashboardLanguage();
-
-</script>
 
 
 <!-- =====================================================
