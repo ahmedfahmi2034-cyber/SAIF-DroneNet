@@ -3,32 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color"
-          content="#0b1220">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07111f">
 
     <title>SAIF DroneNet | تسجيل الدخول</title>
 
-    <!-- Main Style -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        /* =========================================
+           LOGIN LANGUAGE / THEME TRANSITIONS
+           ========================================= */
+
+        body {
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .login-container {
+            transition:
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .language-controls button.active {
+            background: rgba(25, 199, 163, 0.15);
+            color: #19c7a3;
+        }
+
+        #loginMessage {
+            display: none;
+        }
+    </style>
 </head>
 
-<body>
 
-    <!-- =====================================================
-         LOGIN PAGE
-         ===================================================== -->
+<body>
 
     <main class="login-page">
 
         <div class="login-container">
 
-            <!-- =================================================
-                 LEFT / BRAND AREA
-                 ================================================= -->
+            <!-- =========================================
+                 BRAND
+                 ========================================= -->
 
             <section class="login-brand">
 
@@ -42,71 +61,93 @@
                         SAIF DroneNet
                     </h1>
 
-                    <p
-                        id="loginDescription"
-                        data-ar="منصة مراقبة الدرونات الذكية"
-                        data-en="Smart Drone Monitoring Platform">
+                    <p id="loginDescription">
                         منصة مراقبة الدرونات الذكية
                     </p>
 
                     <div class="brand-line"></div>
 
+
                     <div class="brand-features">
 
                         <div class="brand-feature">
+
                             <span>🛸</span>
 
                             <div>
-                                <strong
-                                    data-ar="مراقبة الدرونات"
-                                    data-en="Drone Monitoring">
+
+                                <strong class="lang-ar">
                                     مراقبة الدرونات
                                 </strong>
 
-                                <small
-                                    data-ar="متابعة الدرونات في الوقت الحقيقي"
-                                    data-en="Real-time drone monitoring">
+                                <strong class="lang-en">
+                                    Drone Monitoring
+                                </strong>
+
+                                <small class="lang-ar">
                                     متابعة الدرونات في الوقت الحقيقي
                                 </small>
+
+                                <small class="lang-en">
+                                    Real-time drone monitoring
+                                </small>
+
                             </div>
+
                         </div>
 
 
                         <div class="brand-feature">
+
                             <span>📍</span>
 
                             <div>
-                                <strong
-                                    data-ar="مراقبة المناطق"
-                                    data-en="Area Monitoring">
+
+                                <strong class="lang-ar">
                                     مراقبة المناطق
                                 </strong>
 
-                                <small
-                                    data-ar="تغطية أمنية ذكية للمناطق"
-                                    data-en="Smart security coverage">
+                                <strong class="lang-en">
+                                    Area Monitoring
+                                </strong>
+
+                                <small class="lang-ar">
                                     تغطية أمنية ذكية للمناطق
                                 </small>
+
+                                <small class="lang-en">
+                                    Smart security coverage
+                                </small>
+
                             </div>
+
                         </div>
 
 
                         <div class="brand-feature">
+
                             <span>🚨</span>
 
                             <div>
-                                <strong
-                                    data-ar="الاستجابة للحوادث"
-                                    data-en="Incident Response">
+
+                                <strong class="lang-ar">
                                     الاستجابة للحوادث
                                 </strong>
 
-                                <small
-                                    data-ar="رصد الأحداث والاستجابة لها"
-                                    data-en="Detect and respond to incidents">
+                                <strong class="lang-en">
+                                    Incident Response
+                                </strong>
+
+                                <small class="lang-ar">
                                     رصد الأحداث والاستجابة لها
                                 </small>
+
+                                <small class="lang-en">
+                                    Detect and respond to incidents
+                                </small>
+
                             </div>
+
                         </div>
 
                     </div>
@@ -116,15 +157,16 @@
             </section>
 
 
-            <!-- =================================================
-                 LOGIN FORM
-                 ================================================= -->
+            <!-- =========================================
+                 LOGIN
+                 ========================================= -->
 
             <section class="login-card-section">
 
                 <div class="login-card">
 
-                    <!-- Top Controls -->
+
+                    <!-- Controls -->
 
                     <div class="login-controls">
 
@@ -132,17 +174,13 @@
 
                             <button
                                 type="button"
-                                onclick="setLanguage('ar')"
-                                data-ar="العربية"
-                                data-en="Arabic">
+                                id="arabicButton">
                                 العربية
                             </button>
 
                             <button
                                 type="button"
-                                onclick="setLanguage('en')"
-                                data-ar="English"
-                                data-en="English">
+                                id="englishButton">
                                 English
                             </button>
 
@@ -151,9 +189,7 @@
 
                         <button
                             type="button"
-                            id="themeButton"
-                            onclick="toggleTheme()"
-                            aria-label="تغيير المظهر">
+                            id="themeButton">
                             🌙
                         </button>
 
@@ -174,9 +210,7 @@
                                 SAIF DroneNet
                             </h2>
 
-                            <span
-                                data-ar="نظام الأمن الذكي"
-                                data-en="Smart Security System">
+                            <span id="systemTitle">
                                 نظام الأمن الذكي
                             </span>
 
@@ -185,19 +219,15 @@
                     </div>
 
 
-                    <!-- Welcome -->
+                    <!-- Header -->
 
                     <div class="login-header">
 
-                        <h3
-                            data-ar="مرحبًا بك"
-                            data-en="Welcome">
+                        <h3 id="welcomeText">
                             مرحبًا بك
                         </h3>
 
-                        <p
-                            data-ar="سجّل الدخول للوصول إلى لوحة التحكم"
-                            data-en="Sign in to access the dashboard">
+                        <p id="welcomeDescription">
                             سجّل الدخول للوصول إلى لوحة التحكم
                         </p>
 
@@ -208,16 +238,16 @@
 
                     <form id="loginForm">
 
+
                         <!-- Username -->
 
                         <div class="form-group">
 
-                            <label
-                                for="usernameInput"
-                                data-ar="اسم المستخدم"
-                                data-en="Username">
+                            <label for="usernameInput"
+                                   id="usernameLabel">
                                 اسم المستخدم
                             </label>
+
 
                             <div class="input-wrapper">
 
@@ -225,14 +255,12 @@
                                     👤
                                 </span>
 
+
                                 <input
                                     type="text"
                                     id="usernameInput"
-                                    name="username"
                                     autocomplete="username"
-                                    placeholder="أدخل اسم المستخدم"
-                                    data-placeholder-ar="أدخل اسم المستخدم"
-                                    data-placeholder-en="Enter username">
+                                    placeholder="أدخل اسم المستخدم">
 
                             </div>
 
@@ -243,12 +271,11 @@
 
                         <div class="form-group">
 
-                            <label
-                                for="passwordInput"
-                                data-ar="كلمة المرور"
-                                data-en="Password">
+                            <label for="passwordInput"
+                                   id="passwordLabel">
                                 كلمة المرور
                             </label>
+
 
                             <div class="input-wrapper">
 
@@ -256,20 +283,18 @@
                                     🔒
                                 </span>
 
+
                                 <input
                                     type="password"
                                     id="passwordInput"
-                                    name="password"
                                     autocomplete="current-password"
-                                    placeholder="أدخل كلمة المرور"
-                                    data-placeholder-ar="أدخل كلمة المرور"
-                                    data-placeholder-en="Enter password">
+                                    placeholder="أدخل كلمة المرور">
+
 
                                 <button
                                     type="button"
                                     id="passwordToggle"
-                                    class="password-toggle"
-                                    aria-label="إظهار كلمة المرور">
+                                    class="password-toggle">
                                     إظهار
                                 </button>
 
@@ -278,16 +303,19 @@
                         </div>
 
 
-                        <!-- Login Button -->
+                        <!-- Message -->
+
+                        <div id="loginMessage"></div>
+
+
+                        <!-- Login -->
 
                         <button
                             type="submit"
                             id="loginButton"
                             class="login-button">
 
-                            <span
-                                data-ar="تسجيل الدخول"
-                                data-en="Sign In">
+                            <span id="loginButtonText">
                                 تسجيل الدخول
                             </span>
 
@@ -300,15 +328,13 @@
                     </form>
 
 
-                    <!-- System Status -->
+                    <!-- Status -->
 
                     <div class="system-status">
 
                         <span class="status-dot"></span>
 
-                        <span
-                            data-ar="النظام متصل وجاهز"
-                            data-en="System online and ready">
+                        <span id="systemStatusText">
                             النظام متصل وجاهز
                         </span>
 
@@ -327,9 +353,7 @@
                             •
                         </span>
 
-                        <span
-                            data-ar="نموذج أولي"
-                            data-en="Prototype">
+                        <span id="prototypeText">
                             نموذج أولي
                         </span>
 
@@ -344,15 +368,510 @@
     </main>
 
 
-    <!-- =====================================================
-         SCRIPTS
-         ===================================================== -->
+    <!-- =========================================
+         INDEPENDENT LOGIN JAVASCRIPT
+         لا يعتمد على ui.js أو login.js
+         ========================================= -->
 
-    <!-- Shared UI -->
-    <script src="js/ui.js"></script>
+    <script>
 
-    <!-- Login Controller -->
-    <script src="js/login.js"></script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            /* =====================================
+               ELEMENTS
+               ===================================== */
+
+            const html = document.documentElement;
+            const body = document.body;
+
+            const arabicButton =
+                document.getElementById("arabicButton");
+
+            const englishButton =
+                document.getElementById("englishButton");
+
+            const themeButton =
+                document.getElementById("themeButton");
+
+            const passwordToggle =
+                document.getElementById("passwordToggle");
+
+            const passwordInput =
+                document.getElementById("passwordInput");
+
+            const usernameInput =
+                document.getElementById("usernameInput");
+
+            const loginForm =
+                document.getElementById("loginForm");
+
+            const loginButton =
+                document.getElementById("loginButton");
+
+            const loginButtonText =
+                document.getElementById("loginButtonText");
+
+            const loginMessage =
+                document.getElementById("loginMessage");
+
+
+            /* =====================================
+               LANGUAGE TEXT
+               ===================================== */
+
+            const translations = {
+
+                ar: {
+
+                    description:
+                        "منصة مراقبة الدرونات الذكية",
+
+                    systemTitle:
+                        "نظام الأمن الذكي",
+
+                    welcome:
+                        "مرحبًا بك",
+
+                    welcomeDescription:
+                        "سجّل الدخول للوصول إلى لوحة التحكم",
+
+                    username:
+                        "اسم المستخدم",
+
+                    usernamePlaceholder:
+                        "أدخل اسم المستخدم",
+
+                    password:
+                        "كلمة المرور",
+
+                    passwordPlaceholder:
+                        "أدخل كلمة المرور",
+
+                    show:
+                        "إظهار",
+
+                    hide:
+                        "إخفاء",
+
+                    login:
+                        "تسجيل الدخول",
+
+                    loading:
+                        "جارٍ الدخول...",
+
+                    online:
+                        "النظام متصل وجاهز",
+
+                    prototype:
+                        "نموذج أولي",
+
+                    empty:
+                        "يرجى إدخال اسم المستخدم وكلمة المرور"
+
+                },
+
+                en: {
+
+                    description:
+                        "Smart Drone Monitoring Platform",
+
+                    systemTitle:
+                        "Smart Security System",
+
+                    welcome:
+                        "Welcome",
+
+                    welcomeDescription:
+                        "Sign in to access the dashboard",
+
+                    username:
+                        "Username",
+
+                    usernamePlaceholder:
+                        "Enter username",
+
+                    password:
+                        "Password",
+
+                    passwordPlaceholder:
+                        "Enter password",
+
+                    show:
+                        "Show",
+
+                    hide:
+                        "Hide",
+
+                    login:
+                        "Sign In",
+
+                    loading:
+                        "Signing in...",
+
+                    online:
+                        "System online and ready",
+
+                    prototype:
+                        "Prototype",
+
+                    empty:
+                        "Please enter your username and password"
+
+                }
+
+            };
+
+
+            /* =====================================
+               SET LANGUAGE
+               ===================================== */
+
+            function setLanguage(language) {
+
+                const t = translations[language];
+
+                if (!t) return;
+
+
+                localStorage.setItem(
+                    "saifLanguage",
+                    language
+                );
+
+
+                html.lang = language;
+
+                html.dir =
+                    language === "ar"
+                        ? "rtl"
+                        : "ltr";
+
+
+                document.getElementById(
+                    "loginDescription"
+                ).textContent = t.description;
+
+
+                document.getElementById(
+                    "systemTitle"
+                ).textContent = t.systemTitle;
+
+
+                document.getElementById(
+                    "welcomeText"
+                ).textContent = t.welcome;
+
+
+                document.getElementById(
+                    "welcomeDescription"
+                ).textContent =
+                    t.welcomeDescription;
+
+
+                document.getElementById(
+                    "usernameLabel"
+                ).textContent = t.username;
+
+
+                usernameInput.placeholder =
+                    t.usernamePlaceholder;
+
+
+                document.getElementById(
+                    "passwordLabel"
+                ).textContent = t.password;
+
+
+                passwordInput.placeholder =
+                    t.passwordPlaceholder;
+
+
+                document.getElementById(
+                    "systemStatusText"
+                ).textContent = t.online;
+
+
+                document.getElementById(
+                    "prototypeText"
+                ).textContent = t.prototype;
+
+
+                /* Password button */
+
+                passwordToggle.textContent =
+                    passwordInput.type === "text"
+                        ? t.hide
+                        : t.show;
+
+
+                /* Login button */
+
+                if (!loginButton.disabled) {
+
+                    loginButtonText.textContent =
+                        t.login;
+                }
+
+
+                /* Feature translations */
+
+                document
+                    .querySelectorAll(".lang-ar")
+                    .forEach(function (element) {
+
+                        element.style.display =
+                            language === "ar"
+                                ? ""
+                                : "none";
+                    });
+
+
+                document
+                    .querySelectorAll(".lang-en")
+                    .forEach(function (element) {
+
+                        element.style.display =
+                            language === "en"
+                                ? ""
+                                : "none";
+                    });
+
+
+                /* Active button */
+
+                arabicButton.classList.toggle(
+                    "active",
+                    language === "ar"
+                );
+
+                englishButton.classList.toggle(
+                    "active",
+                    language === "en"
+                );
+
+
+                /* Hide old message */
+
+                loginMessage.style.display =
+                    "none";
+            }
+
+
+            /* =====================================
+               LANGUAGE BUTTONS
+               ===================================== */
+
+            arabicButton.addEventListener(
+                "click",
+                function () {
+
+                    setLanguage("ar");
+
+                }
+            );
+
+
+            englishButton.addEventListener(
+                "click",
+                function () {
+
+                    setLanguage("en");
+
+                }
+            );
+
+
+            /* =====================================
+               THEME
+               ===================================== */
+
+            function setTheme(theme) {
+
+                if (theme === "light") {
+
+                    body.classList.add(
+                        "light-mode"
+                    );
+
+                    themeButton.textContent =
+                        "☀️";
+
+                    localStorage.setItem(
+                        "saifTheme",
+                        "light"
+                    );
+
+                } else {
+
+                    body.classList.remove(
+                        "light-mode"
+                    );
+
+                    themeButton.textContent =
+                        "🌙";
+
+                    localStorage.setItem(
+                        "saifTheme",
+                        "dark"
+                    );
+                }
+            }
+
+
+            themeButton.addEventListener(
+                "click",
+                function () {
+
+                    const isLight =
+                        body.classList.contains(
+                            "light-mode"
+                        );
+
+
+                    setTheme(
+                        isLight
+                            ? "dark"
+                            : "light"
+                    );
+
+                }
+            );
+
+
+            /* =====================================
+               PASSWORD
+               ===================================== */
+
+            passwordToggle.addEventListener(
+                "click",
+                function () {
+
+                    const language =
+                        localStorage.getItem(
+                            "saifLanguage"
+                        ) || "ar";
+
+
+                    if (
+                        passwordInput.type ===
+                        "password"
+                    ) {
+
+                        passwordInput.type =
+                            "text";
+
+                        passwordToggle.textContent =
+                            translations[
+                                language
+                            ].hide;
+
+                    } else {
+
+                        passwordInput.type =
+                            "password";
+
+                        passwordToggle.textContent =
+                            translations[
+                                language
+                            ].show;
+                    }
+
+                }
+            );
+
+
+            /* =====================================
+               LOGIN
+               ===================================== */
+
+            loginForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+
+                    const username =
+                        usernameInput.value.trim();
+
+                    const password =
+                        passwordInput.value.trim();
+
+
+                    const language =
+                        localStorage.getItem(
+                            "saifLanguage"
+                        ) || "ar";
+
+
+                    /* Empty */
+
+                    if (
+                        username === "" ||
+                        password === ""
+                    ) {
+
+                        loginMessage.textContent =
+                            translations[
+                                language
+                            ].empty;
+
+                        loginMessage.style.display =
+                            "block";
+
+                        return;
+                    }
+
+
+                    /* Loading */
+
+                    loginButton.disabled =
+                        true;
+
+                    loginButtonText.textContent =
+                        translations[
+                            language
+                        ].loading;
+
+
+                    /* =================================
+                       GO TO DASHBOARD
+                       ================================= */
+
+                    setTimeout(function () {
+
+                        window.location.href =
+                            "./dashboard.html";
+
+                    }, 500);
+
+                }
+            );
+
+
+            /* =====================================
+               LOAD SAVED SETTINGS
+               ===================================== */
+
+            const savedLanguage =
+                localStorage.getItem(
+                    "saifLanguage"
+                ) || "ar";
+
+
+            const savedTheme =
+                localStorage.getItem(
+                    "saifTheme"
+                ) || "dark";
+
+
+            setLanguage(savedLanguage);
+
+            setTheme(savedTheme);
+
+        });
+
+    </script>
 
 </body>
 
